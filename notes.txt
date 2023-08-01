@@ -1,0 +1,5 @@
+Security
+1. Create entity to map with database
+2. Implementation authentication
+3. Implementation authorization
+4. Encryption and Hashing
