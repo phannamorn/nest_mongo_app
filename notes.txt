@@ -1,5 +1,24 @@
-Security
-1. Create entity to map with database
-2. Implementation authentication
-3. Implementation authorization
-4. Encryption and Hashing
+1. Security
+    a. Create entity to map with database
+    b. Implementation authentication
+    c. Implementation authorization
+    d. Encryption and Hashing
+
+2. Dependency injection
+    a. Modular
+    b. Easier to test
+
+3. Routing and guards
+
+4. Modules
+    a. providers: the providers that will be instantiated by the Nest injector and that may be shared at least across this module
+    b. controllers: the set of controllers defined in this module which have to be instantiated
+    c. imports: the list of imported modules that export the providers which are required in this module
+    d. exports: the subset of providers that are provided by this module and should be available in other modules which import this module. You can use either the provider itself or just its token (provide value)
+5. Middleware
+
+4. Testing
+    a. Unit Test
+    b. Integration Test
+
+5. Debuging
