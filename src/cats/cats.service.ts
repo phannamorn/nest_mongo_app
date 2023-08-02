@@ -1,45 +1,32 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CatDto } from './cat.dto';
+import { Cat } from './cat.entity';
 
 @Injectable()
 export class CatsService {
-    getAll(): CatDto[] {
-        return [
-            {
-              name: "Garfield",
-              breed: "Tabby",
-              color: "Orange",
-            },
-            {
-              name: "Simba",
-              breed: "Lion",
-              color: "Yellow",
-            },
-            {
-              name: "Tom",
-              breed: "Siamese",
-              color: "White",
-            },
-          ]
-    }
+  constructor(@InjectRepository(Cat) private catsRepository: Repository<Cat>) { }
 
-    getOne(id: number): CatDto {
-        return {
-            name: "Garfield",
-            breed: "Tabby",
-            color: "Orange",
-        };
-    }
+  async getAll(): Promise<CatDto[]> {
+    const cats: CatDto[] = await this.catsRepository.find();
+    return cats;
+  }
 
-    create(catDto: CatDto): CatDto {
-        return catDto;
-    }
+  async getOne(id: number): Promise<CatDto> {
+    const cat: CatDto = await this.catsRepository.findOneBy({id});
+    return cat;
+  }
 
-    update(id: number, catDto: CatDto): CatDto {
-        return catDto;
-    }
+  create(catDto: CatDto): CatDto {
+    return catDto;
+  }
 
-    delete(id: number) {
-        return {id: 1, name: "Cat A"};
-    }
+  update(id: number, catDto: CatDto): CatDto {
+    return catDto;
+  }
+
+  delete(id: number) {
+    return {id: 1, name: "Cat A"};
+  }
 }

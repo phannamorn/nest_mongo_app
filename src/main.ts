@@ -10,7 +10,6 @@ async function bootstrap() {
   .setDescription('The first app API description')
   .setVersion('1.0')
   .addTag('cats')
-  .addTag('dogs')
   .addTag('owners')
   .build();
 

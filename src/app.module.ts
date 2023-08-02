@@ -1,17 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatsModule } from './cats/cats.module';
-import { DogsModule } from './dogs/dogs.module';
 import { OwnersModule } from './owners/owners.module';
+import { Cat } from './cats/cat.entity';
 
 @Module({
-  controllers: [AppController],
+  // controllers: [AppController],
   providers: [AppService],
   imports: [
-    CatsModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -20,10 +18,10 @@ import { OwnersModule } from './owners/owners.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [],
-      synchronize: true,
+      entities: [Cat],
+      logging: true
     }),
-    DogsModule,
+    CatsModule,
     OwnersModule
   ]
 })

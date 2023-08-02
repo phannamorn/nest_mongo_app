@@ -1,14 +1,20 @@
-import { IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CatDto {
 
-  @IsString()
+  @ApiProperty()
   name: string;
 
-  @IsString()
+  @ApiProperty()
   breed: string;
 
-  @IsString()
+  @ApiProperty()
   color: string;
+
+  @ApiProperty({enum: ['Persian', 'Siamese', 'Abyssinian']})
+  type: string;
+
+  @ApiProperty({default: 0, maximum: 20})
+  age: number;
 
 }
