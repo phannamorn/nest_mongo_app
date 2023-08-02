@@ -6,7 +6,8 @@ import {
   Delete,
   Body,
   Param, 
-  Req
+  Req,
+  HttpCode
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CatDto } from './cat.dto';
@@ -62,8 +63,8 @@ export class CatsController {
       },
     },
   })
-  create(@Body() catDto: CatDto): CatDto {
-    const cat = this.catService.create(catDto);
+  async create(@Body() catDto: CatDto): Promise<CatDto> {
+    const cat = await this.catService.create(catDto);
     return cat;
   }
 
@@ -74,6 +75,7 @@ export class CatsController {
   }
 
   @Delete(':id')
+  @HttpCode(201)
   delete(@Param('id') id: number): void {
     this.catService.delete(id);
   }

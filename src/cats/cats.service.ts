@@ -18,15 +18,16 @@ export class CatsService {
     return cat;
   }
 
-  create(catDto: CatDto): CatDto {
-    return catDto;
+  async create(catDto: CatDto): Promise<CatDto> {
+    const cat: CatDto = await this.catsRepository.save(catDto);
+    return cat;
   }
 
   update(id: number, catDto: CatDto): CatDto {
     return catDto;
   }
 
-  delete(id: number) {
-    return {id: 1, name: "Cat A"};
+  async delete(id: number) {
+    await this.catsRepository.delete({id});
   }
 }

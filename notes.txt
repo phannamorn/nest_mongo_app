@@ -1,5 +1,5 @@
 1. Security
-    a. Create entity to map with database
+    a. Create entity to map with database[Done]
     b. Implementation authentication
     c. Implementation authorization
     d. Encryption and Hashing
