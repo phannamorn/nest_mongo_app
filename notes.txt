@@ -1,8 +1,8 @@
 1. Security
     a. Create entity to map with database[Done]
-    b. Implementation authentication
+    b. Implementation authentication[Done]
     c. Implementation authorization
-    d. Encryption and Hashing
+    d. Encryption and Hashing[Done]
 
 2. Dependency injection
     a. Modular

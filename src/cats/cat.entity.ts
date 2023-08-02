@@ -1,3 +1,4 @@
+import { Type } from 'src/enums/type.enum';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
@@ -15,7 +16,7 @@ export class Cat {
   color: string;
 
   @Column()
-  type: string;
+  type: Type;
 
   @Column()
   age: number;

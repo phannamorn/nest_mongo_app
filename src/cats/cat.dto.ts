@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'src/enums/type.enum';
 
 export class CatDto {
 
@@ -12,7 +13,7 @@ export class CatDto {
   color: string;
 
   @ApiProperty({enum: ['Persian', 'Siamese', 'Abyssinian']})
-  type: string;
+  type: Type;
 
   @ApiProperty({default: 0, maximum: 20})
   age: number;
