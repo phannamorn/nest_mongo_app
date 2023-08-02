@@ -7,7 +7,8 @@ import {
   Body,
   Param, 
   Req,
-  HttpCode
+  HttpCode,
+  HttpStatus
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CatDto } from './cat.dto';
@@ -69,13 +70,13 @@ export class CatsController {
   }
 
   @Put(':id')
-  @HttpCode(201)
+  @HttpCode(HttpStatus.NO_CONTENT)
   update(@Body() catDto: CatDto, @Param('id') id: number): void {
     this.catService.update(id, catDto);
   }
 
   @Delete(':id')
-  @HttpCode(201)
+  @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('id') id: number): void {
     this.catService.delete(id);
   }
