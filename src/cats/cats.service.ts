@@ -23,8 +23,8 @@ export class CatsService {
     return cat;
   }
 
-  update(id: number, catDto: CatDto): CatDto {
-    return catDto;
+  update(id: number, catDto: CatDto): void {
+    this.catsRepository.update({id}, catDto);
   }
 
   async delete(id: number) {

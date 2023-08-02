@@ -68,10 +68,10 @@ export class CatsController {
     return cat;
   }
 
-  @Put()
-  update(id: number, catDto: CatDto): CatDto {
-    const cat = this.catService.update(id, catDto);
-    return cat;
+  @Put(':id')
+  @HttpCode(201)
+  update(@Body() catDto: CatDto, @Param('id') id: number): void {
+    this.catService.update(id, catDto);
   }
 
   @Delete(':id')
