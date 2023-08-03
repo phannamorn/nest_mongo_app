@@ -9,12 +9,21 @@ import {
   Req,
   HttpCode,
   HttpStatus,
-  UseGuards
+  UseGuards,
+  SetMetadata
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CatDto } from './cat.dto';
-import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { 
+  ApiTags, 
+  ApiResponse, 
+  ApiBearerAuth 
+} from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { Role } from 'src/enums/role.enum';
+
+export const ROLES_KEY = 'roles';
+export const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
@@ -48,6 +57,7 @@ export class CatsController {
   }
 
   @Get(':id')
+  @Roles(Role.Admin)
   getOne(@Param('id') id: number): Promise<CatDto> {
     return this.catService.getOne(id);
   }

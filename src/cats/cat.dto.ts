@@ -17,5 +17,4 @@ export class CatDto {
 
   @ApiProperty({default: 0, maximum: 20})
   age: number;
-
 }
