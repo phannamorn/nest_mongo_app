@@ -17,6 +17,67 @@ function identity<T>(arg: T): T {
     return arg;
 }
 
+//Enum
+enum CarType {
+    GAS = 'gas',
+    EV = 'ev',
+    HYBRID = 'hybrid'
+}
+
+//Tuple
+let wheel: [string, string, string, string] = ['BBS', 'Rotiform', 'Enkei', 'Konig'];
+let country: [number, string, boolean, string];
+
+//Namespaces
+namespace Order {
+    export function getItems() {
+        console.log('Get items execute');
+    }
+    export function getTotal() {
+        console.log('Get total execute');
+    }
+    export function getDiscount() {
+        console.log('Get discount execute');
+    }
+    export function getTax() {
+        console.log('Get tax execute');
+    }
+}
+
+//Condition Type
+type IsString<T> = T extends string ? true : false;
+let a: IsString<string> = true;
+let b: IsString<number> = false;
+const isNumber = (value: any) => typeof value == 'number';
+console.log("A:", a);
+console.log("B:", isNumber('12992'));
+
+//Advance
+//Intersection Types
+type person = { id: number, gender: string, age: number };
+type student = { major: string, university: string };
+type PersonAndStudent = person & student;
+let obj: PersonAndStudent = {id: 1, gender: 'Male', age: 12, major: 'MIT', university: 'RUPP'};
+console.log('Advance Type:', obj);
+
+//Union Types
+let unionType: number | string | boolean = 'Hello';
+console.log('Union Type:', unionType);
+
+//Type Aliases
+type Name = string;
+let typeAlias: Name = 'Hello here is type aliases';
+console.log("Type Alias:", typeAlias);
+
+//keyof
+type Keys = keyof {id: 1, name: 2, description: 'Hello World'};
+const keys: Keys = "id";
+console.log("Keys:", keys);
+
+//In operator
+let inOperator = { a: 1, b: 'hello'};
+console.log("In Operator:", 'a' in inOperator);
+
 interface Engine {
     wheel: number;
 
@@ -25,15 +86,11 @@ interface Engine {
 
 @logger
 class GasEngine implements Engine {
-    constructor() {
-
-    }
-
     @logProperty
     wheel: number;
 
     start() {
-        console.log('Start the engine using gasoline.', identity<number>(12345));
+        console.log('Start the engine using gasoline.');
     }
 }
 
