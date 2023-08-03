@@ -9,6 +9,9 @@
     b. Easier to test
 
 3. Routing and guards
+    a. Register guard to controller[Done]
+    b. Register guard to any module
+    c. Register guard to global, but except any module
 
 4. Modules
     a. Providers: the providers that will be instantiated by the Nest injector and that may be shared at least across this module
