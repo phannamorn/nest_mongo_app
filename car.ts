@@ -23,6 +23,17 @@ class WaterEngine implements Engine {
 }
 
 class DependencyInjectionContainer {
+    private dependencies: Map<string, Function> = new Map();
+
+    constructor() {
+        this.dependencies.set('gas', () => new GasEngine());
+        this.dependencies.set('electric', () => new ElectricEngine());
+    }
+
+    createDependency(type: string) {
+        return this.dependencies.get(type)();
+    }
+
     createEngine(type: string) {
       if (type === 'gas') {
         return new GasEngine();
@@ -49,5 +60,5 @@ class Car {
 }
 
 const container = new DependencyInjectionContainer();
-const bmw: Car = new Car(container.createEngine('gas'));
+const bmw: Car = new Car(container.createDependency('gas'));
 bmw.startEngine();
