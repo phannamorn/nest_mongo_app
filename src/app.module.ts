@@ -11,7 +11,9 @@ import { Owner } from './owners/owner.entity';
 
 @Module({
   // controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService
+  ],
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({

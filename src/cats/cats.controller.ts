@@ -8,12 +8,16 @@ import {
   Param, 
   Req,
   HttpCode,
-  HttpStatus
+  HttpStatus,
+  UseGuards
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CatDto } from './cat.dto';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('cats')
 @ApiTags('cats')
 export class CatsController {
@@ -39,13 +43,13 @@ export class CatsController {
       },
     },
   })
-  async getAll(@Req() request: Request): Promise<CatDto[]> {
-    return await this.catService.getAll();
+  getAll(@Req() request: Request): Promise<CatDto[]> {
+    return this.catService.getAll();
   }
 
   @Get(':id')
-  async getOne(@Param('id') id: number): Promise<CatDto> {
-    return await this.catService.getOne(id);
+  getOne(@Param('id') id: number): Promise<CatDto> {
+    return this.catService.getOne(id);
   }
 
   @Post()
@@ -64,9 +68,8 @@ export class CatsController {
       },
     },
   })
-  async create(@Body() catDto: CatDto): Promise<CatDto> {
-    const cat = await this.catService.create(catDto);
-    return cat;
+  create(@Body() catDto: CatDto): Promise<CatDto> {
+    return this.catService.create(catDto);
   }
 
   @Put(':id')

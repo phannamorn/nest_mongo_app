@@ -11,11 +11,12 @@
 3. Routing and guards
 
 4. Modules
-    a. providers: the providers that will be instantiated by the Nest injector and that may be shared at least across this module
-    b. controllers: the set of controllers defined in this module which have to be instantiated
-    c. imports: the list of imported modules that export the providers which are required in this module
-    d. exports: the subset of providers that are provided by this module and should be available in other modules which import this module. You can use either the provider itself or just its token (provide value)
+    a. Providers: the providers that will be instantiated by the Nest injector and that may be shared at least across this module
+    b. Controllers: the set of controllers defined in this module which have to be instantiated
+    c. Imports: the list of imported modules that export the providers which are required in this module
+    d. Exports: the subset of providers that are provided by this module and should be available in other modules which import this module. You can use either the provider itself or just its token (provide value)
 5. Middleware
+    a. Guard
 
 4. Testing
     a. Unit Test

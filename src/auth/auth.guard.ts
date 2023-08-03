@@ -13,10 +13,11 @@ import {
   
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const request = context.switchToHttp().getRequest();
-      const token = this.extractTokenFromHeader(request);
+      const token = this.extractTokenFromHeader(request);console.log("Token:", token);
       if (!token) {
         throw new UnauthorizedException();
       }
+
       try {
         const payload = await this.jwtService.verifyAsync(
           token,
@@ -24,8 +25,7 @@ import {
             secret: 'kolap'
           }
         );
-        // 💡 We're assigning the payload to the request object here
-        // so that we can access it in our route handlers
+        
         request['user'] = payload;
       } catch {
         throw new UnauthorizedException();
