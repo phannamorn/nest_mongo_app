@@ -114,6 +114,8 @@ Flexibility: Generics allow you to be flexible in your code. This means that you
 
 const result1 = genericFunction1("Hello World");
 const result2 = genericFunction1(999);
+const result3 = genericFunction3("Hello World");
+const result4 = genericFunction3(999);
 
 
 interface Engine {
