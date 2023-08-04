@@ -1,17 +1,24 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 import { CatsController } from './cats.controller';
 import { CatsService } from './cats.service';
 import { Cat } from './cat.entity';
+import { JwtService } from '@nestjs/jwt';
 
 describe('CatsController', () => {
   let controller: CatsController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [TypeOrmModule.forFeature([Cat])],
       controllers: [CatsController],
-      providers: [CatsService]
+      providers: [
+        CatsService,
+        JwtService,
+        {
+          provide: getRepositoryToken(Cat),
+          useValue: {}         
+        }
+      ]
     }).compile();
 
     controller = module.get<CatsController>(CatsController);
