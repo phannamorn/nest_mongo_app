@@ -3,10 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CatDto } from './cat.dto';
 import { Cat } from './cat.entity';
+// import { CatRepository } from './cat.repository';
 
 @Injectable()
 export class CatsService {
-  constructor(@InjectRepository(Cat) private catsRepository: Repository<Cat>) { }
+  constructor(@InjectRepository(Cat) private catsRepository: Repository<Cat>) {}
+  // constructor(private catsRepository: CatRepository) {}
 
   async getAll(): Promise<CatDto[]> {
     const cats: CatDto[] = await this.catsRepository.find();
