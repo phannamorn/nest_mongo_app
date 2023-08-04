@@ -14,7 +14,7 @@ describe('CatsService', () => {
           provide: getRepositoryToken(Cat),
           useValue: {}
         }
-      ],
+      ]
     }).compile();
 
     service = module.get<CatsService>(CatsService);

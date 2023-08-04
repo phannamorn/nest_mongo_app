@@ -39,7 +39,7 @@ describe('CatsController', () => {
       
       jest.spyOn(service, 'getAll').mockImplementation(() => Promise.resolve(result));
 
-      expect(Array.isArray((await controller.getAll(req)))).toBe(true);
+      expect(Array.isArray((await controller.getAll('', 0, 15)))).toBe(true);
     });
   });
 });

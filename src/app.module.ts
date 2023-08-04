@@ -8,9 +8,10 @@ import { Cat } from './cats/cat.entity';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { Owner } from './owners/owner.entity';
+import { AppController } from './app.controller';
 
 @Module({
-  // controllers: [AppController],
+  controllers: [AppController],
   providers: [
     AppService
   ],

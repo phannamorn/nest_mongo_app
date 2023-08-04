@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { Role } from 'src/enums/role.enum';
+import { Type } from 'src/enums/type.enum';
 
 @Entity()
 export class Owner {
@@ -17,13 +18,13 @@ export class Owner {
   password: string;
 
   @Column()
-  token: string;
+  access_token: string;
 
   @Column({enum: ["user", "admin"]})
   role: Role;
 
   @Column()
-  type: Role;
+  type: Type;
 
   @Column()
   email: string;

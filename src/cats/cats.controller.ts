@@ -4,9 +4,9 @@ import {
   Post, 
   Put, 
   Delete,
+  Query,
   Body,
   Param, 
-  Req,
   HttpCode,
   HttpStatus,
   UseGuards,
@@ -21,6 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Role } from 'src/enums/role.enum';
+import { FilterOptions } from 'src/types/filter.option';
 
 export const ROLES_KEY = 'roles';
 export const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);
@@ -52,8 +53,13 @@ export class CatsController {
       },
     },
   })
-  getAll(@Req() request: Request): Promise<CatDto[]> {
-    return this.catService.getAll();
+  getAll(
+    @Query('search') search?: string,
+    @Query('offset') offset?: number,
+    @Query('limit') limit?: number
+  ): Promise<CatDto[]> {
+    const option: FilterOptions = { search, offset, limit };
+    return this.catService.getAll(option);
   }
 
   @Get(':id')

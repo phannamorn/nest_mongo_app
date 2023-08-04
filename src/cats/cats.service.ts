@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CatDto } from './cat.dto';
 import { Cat } from './cat.entity';
+import { FilterOptions } from 'src/types/filter.option';
+import { FindOption } from 'src/types/find.option';
 // import { CatRepository } from './cat.repository';
 
 @Injectable()
@@ -10,8 +12,14 @@ export class CatsService {
   constructor(@InjectRepository(Cat) private catsRepository: Repository<Cat>) {}
   // constructor(private catsRepository: CatRepository) {}
 
-  async getAll(): Promise<CatDto[]> {
-    const cats: CatDto[] = await this.catsRepository.find();
+  async getAll(option: FilterOptions): Promise<CatDto[]> {
+    const findOption: FindOption = { 
+
+      
+      skip: Number(option.offset),
+      take: Number(option.limit)
+    };
+    const cats: CatDto[] = await this.catsRepository.find(findOption);
     return cats;
   }
 

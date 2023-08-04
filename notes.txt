@@ -24,5 +24,7 @@
 4. Testing[In Progress]
     a. Unit Test
     b. Integration Test
+    c. E2E
+    d. A/B testing
 
 5. Debuging[Done]
