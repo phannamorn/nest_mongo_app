@@ -78,6 +78,44 @@ console.log("Keys:", keys);
 let inOperator = { a: 1, b: 'hello'};
 console.log("In Operator:", 'a' in inOperator);
 
+//There are three levels of generics in 
+/**
+ * Type parameter: This is the most basic level of generics. 
+ * Type parameters are used to define the type of a variable or function. 
+ * For example, the following code defines a function that takes a generic type parameter T
+ */
+function genericFunction1<T>(value: T) {
+    console.log("generic function 1 type:", typeof value);
+    return value;
+}
+/**
+ * Constraint: This is a level of generics that allows you to specify constraints on the type parameter. 
+ * For example, the following code defines a function that takes a generic type parameter T and constrains it to be a number:
+ */
+function genericFunction2<T extends number>(value: T) {
+    return value;
+}
+
+/**
+ * Reified generics: This is the highest level of generics. 
+ * Reified generics allow you to get the actual type of the generic parameter at runtime. 
+ * For example, the following code defines a function that takes a generic type parameter T and returns the actual type of T
+ */
+function genericFunction3<T>(value: T): T {
+    return value;
+}
+
+/**
+* Here are some of the benefits of using generics in TypeScript:
+Type safety: Generics help to ensure type safety in your code. This means that you can be sure that the types of your variables and functions are correct.
+Code reuse: Generics allow you to reuse code. This can save you time and effort when you are developing your applications.
+Flexibility: Generics allow you to be flexible in your code. This means that you can use generics to work with different types of data.
+**/
+
+const result1 = genericFunction1("Hello World");
+const result2 = genericFunction1(999);
+
+
 interface Engine {
     wheel: number;
 

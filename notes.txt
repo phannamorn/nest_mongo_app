@@ -22,9 +22,9 @@
     a. Guard
 
 4. Testing[In Progress]
-    a. Unit Test
+    a. Unit Test[70%]
     b. Integration Test
-    c. E2E
+    c. E2E[In Progress]
     d. A/B testing
 
 5. Debuging[Done]

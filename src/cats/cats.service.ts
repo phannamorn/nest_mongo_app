@@ -14,8 +14,6 @@ export class CatsService {
 
   async getAll(option: FilterOptions): Promise<CatDto[]> {
     const findOption: FindOption = { 
-
-      
       skip: Number(option.offset),
       take: Number(option.limit)
     };
