@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
-import { CreateOwnerDto } from 'src/owners/create-owner.dto';
+import { CreateOwnerDto } from 'src/modules/owners/create-owner.dto';
 
 @Controller('auth')
 @ApiTags('auth')

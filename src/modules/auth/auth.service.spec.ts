@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { AuthService } from './auth.service';
-import { Owner } from 'src/owners/owner.entity';
+import { Owner } from 'src/modules/owners/owner.entity';
 import { JwtService } from '@nestjs/jwt';
 
 describe('AuthService', () => {

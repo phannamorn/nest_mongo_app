@@ -8,23 +8,26 @@
     a. Modular
     b. Easier to test
 
-3. Routing and guards
+3. Database
+    a. Migration
+
+4. Routing and guards
     a. Register guard to controller[Done]
     b. Register guard to any module
     c. Register guard to global, but except any module
 
-4. Modules
-    a. Providers: the providers that will be instantiated by the Nest injector and that may be shared at least across this module
-    b. Controllers: the set of controllers defined in this module which have to be instantiated
-    c. Imports: the list of imported modules that export the providers which are required in this module
-    d. Exports: the subset of providers that are provided by this module and should be available in other modules which import this module. You can use either the provider itself or just its token (provide value)
-5. Middleware
+5. Modules
+    a. Providers: The providers that will be instantiated by the Nest injector and that may be shared at least across this module
+    b. Controllers: The set of controllers defined in this module which have to be instantiated
+    c. Imports: The list of imported modules that export the providers which are required in this module
+    d. Exports: The subset of providers that are provided by this module and should be available in other modules which import this module. You can use either the provider itself or just its token (provide value)
+6. Middleware
     a. Guard
 
-4. Testing[In Progress]
+7. Testing[In Progress]
     a. Unit Test[70%]
     b. Integration Test
     c. E2E[In Progress]
     d. A/B testing
 
-5. Debuging[Done]
+8. Debuging[Done]

@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
-import { CatsModule } from './cats/cats.module';
-import { OwnersModule } from './owners/owners.module';
-import { Cat } from './cats/cat.entity';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
-import { Owner } from './owners/owner.entity';
+import { CatsModule } from './modules/cats/cats.module';
+import { OwnersModule } from './modules/owners/owners.module';
+import { Cat } from './modules/cats/cat.entity';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { Owner } from './modules/owners/owner.entity';
 import { AppController } from './app.controller';
 
 @Module({

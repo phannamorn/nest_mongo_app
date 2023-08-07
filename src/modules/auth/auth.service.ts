@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { Owner } from 'src/owners/owner.entity';
-import { CreateOwnerDto } from 'src/owners/create-owner.dto';
+import { Owner } from 'src/modules/owners/owner.entity';
+import { CreateOwnerDto } from 'src/modules/owners/create-owner.dto';
 
 @Injectable()
 export class AuthService {

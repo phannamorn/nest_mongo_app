@@ -111,12 +111,41 @@ Type safety: Generics help to ensure type safety in your code. This means that y
 Code reuse: Generics allow you to reuse code. This can save you time and effort when you are developing your applications.
 Flexibility: Generics allow you to be flexible in your code. This means that you can use generics to work with different types of data.
 **/
-
+//Example
 const result1 = genericFunction1("Hello World");
 const result2 = genericFunction1(999);
 const result3 = genericFunction3("Hello World");
 const result4 = genericFunction3(999);
 
+// Primitive types
+const number = 10; // number
+const string = 'Hello, world!'; // string
+const boolean = true; // boolean
+// const undefined = undefined; // undefined
+// const null = null; // null
+
+// Object types
+const person = {
+    name: 'John Doe',
+    age: 30,
+}; // Object
+
+// Union types
+let age = 30; // number
+age = 30; // string
+
+// Intersection types
+const product = {
+    name: 'Book',
+    price: 10,
+}; // string & number
+  
+// Enum types
+enum Color {
+    Red,
+    Green,
+    Blue,
+}
 
 interface Engine {
     wheel: number;

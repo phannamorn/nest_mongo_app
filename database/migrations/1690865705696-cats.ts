@@ -1,10 +1,6 @@
 import {
     MigrationInterface,
-    QueryRunner,
-    Table,
-    TableIndex,
-    TableColumn,
-    TableForeignKey,
+    QueryRunner
 } from "typeorm"
 
 export class Cats1690865705696 implements MigrationInterface {

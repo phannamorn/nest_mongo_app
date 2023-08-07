@@ -19,7 +19,7 @@ import {
   ApiResponse, 
   ApiBearerAuth 
 } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/modules/auth/auth.guard';
 import { Role } from 'src/enums/role.enum';
 import { FilterOptions } from 'src/types/filter.option';
 
