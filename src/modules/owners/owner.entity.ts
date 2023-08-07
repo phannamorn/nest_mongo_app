@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Role } from 'src/enums/role.enum';
 import { Type } from 'src/enums/type.enum';
+import { Cat } from '../cats/cat.entity';
 
 @Entity()
 export class Owner {
@@ -32,4 +33,7 @@ export class Owner {
   @Column()
   phone_number: string;
 
+  @OneToMany(() => Cat, cat => cat.owner)
+  cats: Cat[];
 }
+

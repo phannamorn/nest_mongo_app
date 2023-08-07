@@ -3,5 +3,6 @@ import { WhereOption } from "./where.option";
 export type FindOption = { 
     skip?: number, 
     take?: number,
-    where?: WhereOption
+    where?: WhereOption,
+    relations?: any
 }; 
