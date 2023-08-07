@@ -22,6 +22,7 @@ import {
 import { AuthGuard } from 'src/modules/auth/auth.guard';
 import { Role } from 'src/enums/role.enum';
 import { FilterOptions } from 'src/types/filter.option';
+import { AgeCheckMiddleware } from 'src/middlewares/agechecker.middleware';
 
 export const ROLES_KEY = 'roles';
 export const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);
@@ -33,6 +34,7 @@ export const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);
 export class CatsController {
   constructor(private readonly catService: CatsService) {}
 
+  @UseGuards(AgeCheckMiddleware)
   @Get()
   @ApiResponse({
     description: 'A list of cats',

@@ -29,6 +29,7 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/jwt": "^10.1.0",
     "@nestjs/mapped-types": "*",
+    "@nestjs/microservices": "^10.1.3",
     "@nestjs/passport": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.4",
@@ -70,7 +71,9 @@
       "ts"
     ],
     "rootDir": "src",
-    "modulePaths": ["<rootDir>"],
+    "modulePaths": [
+      "<rootDir>"
+    ],
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -78,7 +81,10 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
-    "moduleDirectories": ["<rootDir>/../", "node_modules"],
+    "moduleDirectories": [
+      "<rootDir>/../",
+      "node_modules"
+    ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }

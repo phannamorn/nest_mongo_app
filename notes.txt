@@ -10,6 +10,7 @@
 
 3. Database
     a. Migration
+    b. Seeder
 
 4. Routing and guards
     a. Register guard to controller[Done]
