@@ -3,7 +3,6 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 // import { CatsModule } from 'src/cats/cats.module';
 // import { Type } from 'src/enums/type.enum';
-import { CatsService } from 'src/modules/cats/cats.service.e2e';
 
 describe('CatController (e2e)', () => {
   let app: INestApplication;
@@ -13,8 +12,6 @@ describe('CatController (e2e)', () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       // imports: [CatsModule]
     })
-    .overrideProvider(CatsService)
-    .useValue(catsService)
     .compile();
 
     app = moduleFixture.createNestApplication();

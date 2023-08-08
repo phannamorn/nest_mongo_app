@@ -13,12 +13,12 @@ export class CatsService {
   // constructor(private catsRepository: CatRepository) {}
 
   async getAll(option: FilterOptions): Promise<CatDto[]> {
-    const findOption: FindOption = { 
+    const findOption: FindOption = {
       skip: Number(option.offset),
       take: Number(option.limit),
       relations: { owner: true }
     };
-
+    
     const cats: CatDto[] = await this.catsRepository.find(findOption);
     return cats;
   }
@@ -29,6 +29,10 @@ export class CatsService {
   }
 
   async create(catDto: CatDto): Promise<CatDto> {
+    if (catDto.age <= 0) {
+      catDto.age = 10
+    }
+
     const cat: CatDto = await this.catsRepository.save(catDto);
     return cat;
   }
