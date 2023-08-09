@@ -2,9 +2,10 @@ import {
   Headers,
   Controller,
   Post,
+  Req,
   HttpCode,
   HttpStatus,
-  Body,
+  Body
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
@@ -18,9 +19,12 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   signIn(
+    @Req() req: Request,
     @Headers('username') username: string,
     @Headers('password') password: string,
   ) {
+    const userAgent = req.headers['user-agent'];
+    console.log('user agent:', userAgent);
     return this.authService.signIn(username, password);
   }
 

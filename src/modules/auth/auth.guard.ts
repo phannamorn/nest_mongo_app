@@ -1,11 +1,14 @@
 import {
   CanActivate,
   ExecutionContext,
+  ForbiddenException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { plainToClass } from 'class-transformer';
 import { Request } from 'express';
+import { TokenPayload } from 'src/types/token.payload';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -16,6 +19,16 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
     if (!token) {
       throw new UnauthorizedException();
+    }
+
+    const decoded: TokenPayload = plainToClass(TokenPayload, this.jwtService.decode(token));
+
+    if (!decoded.sub) {
+      throw new UnauthorizedException('Invalid access token');
+    }
+
+    if (!decoded.scope || !decoded.scope.includes('read')) {
+      throw new ForbiddenException('Insufficient privileges');
     }
 
     try {

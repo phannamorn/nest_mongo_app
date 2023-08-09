@@ -3,6 +3,8 @@
     b. Implementation authentication[Done]
     c. Implementation authorization
     d. Encryption and Hashing[Done]
+    e. Check more deeply with JWT(Refresh Token, scope, other)
+    f. oauth2
 
 2. Dependency injection
     a. Modular
