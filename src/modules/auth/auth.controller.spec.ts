@@ -16,9 +16,9 @@ describe('AuthController', () => {
         JwtService,
         {
           provide: getRepositoryToken(Owner),
-          useValue: {}         
-        }
-      ]
+          useValue: {},
+        },
+      ],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);

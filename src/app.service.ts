@@ -6,13 +6,27 @@ import { Type } from './enums/type.enum';
 export class AppService {
   getHello(): CatDto[] {
     const cats: CatDto[] = [
-      {name: 'hello', breed: 'hello', color: 'red', age: 10, type: Type.Abyssinian}
+      {
+        name: 'hello',
+        breed: 'hello',
+        color: 'red',
+        age: 10,
+        type: Type.Abyssinian,
+      },
     ];
     return cats;
   }
 
   getAll(): CatDto[] {
-    const cats: CatDto[] = [{name: 'hello', breed: 'hello', color: 'red', age: 10, type: Type.Abyssinian}];
+    const cats: CatDto[] = [
+      {
+        name: 'hello',
+        breed: 'hello',
+        color: 'red',
+        age: 10,
+        type: Type.Abyssinian,
+      },
+    ];
     return cats;
   }
 }

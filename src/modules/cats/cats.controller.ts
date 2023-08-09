@@ -1,24 +1,20 @@
 import {
   Controller,
-  Get, 
-  Post, 
-  Put, 
+  Get,
+  Post,
+  Put,
   Delete,
   Query,
   Body,
-  Param, 
+  Param,
   HttpCode,
   HttpStatus,
   UseGuards,
-  SetMetadata
+  SetMetadata,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CatDto } from './cat.dto';
-import { 
-  ApiTags, 
-  ApiResponse, 
-  ApiBearerAuth 
-} from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from 'src/modules/auth/auth.guard';
 import { Role } from 'src/enums/role.enum';
 import { FilterOptions } from 'src/types/filter.option';
@@ -56,7 +52,7 @@ export class CatsController {
   getAll(
     @Query('search') search?: string,
     @Query('offset') offset?: number,
-    @Query('limit') limit?: number
+    @Query('limit') limit?: number,
   ): Promise<CatDto[]> {
     const option: FilterOptions = { search, offset, limit };
     return this.catService.getAll(option);

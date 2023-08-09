@@ -14,8 +14,8 @@ describe('AuthService', () => {
         JwtService,
         {
           provide: getRepositoryToken(Owner),
-          useValue: {}
-        }
+          useValue: {},
+        },
       ],
     }).compile();
 

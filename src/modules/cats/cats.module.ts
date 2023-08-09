@@ -8,6 +8,6 @@ import { CatRepository } from './cat.repository';
 @Module({
   imports: [TypeOrmModule.forFeature([Cat, CatRepository])],
   controllers: [CatsController],
-  providers: [CatsService]
+  providers: [CatsService],
 })
 export class CatsModule {}

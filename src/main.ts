@@ -6,14 +6,17 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-  .addBearerAuth()
-  .setTitle('API Docs')
-  .setDescription('The first app API description')
-  .setVersion('1.0')
-  .addTag('auth')
-  .addTag('cats')
-  .addTag('owners')
-  .build();
+    .addBearerAuth()
+    .setTitle('API Docs')
+    .setDescription('The first app API description')
+    .setVersion('1.0')
+    .addTag('auth')
+    .addTag('cats')
+    .addTag('owners')
+    .addTag('customers')
+    .addTag('bank_accounts')
+    .addTag('transactions')
+    .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

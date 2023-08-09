@@ -10,7 +10,6 @@ import { Type } from 'src/enums/type.enum';
 describe('CatsController', () => {
   let controller: CatsController;
   let service: CatsService;
-  let req: Request;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -20,9 +19,9 @@ describe('CatsController', () => {
         JwtService,
         {
           provide: getRepositoryToken(Cat),
-          useValue: {}         
-        }
-      ]
+          useValue: {}
+        },
+      ],
     }).compile();
 
     service = module.get(CatsService);
@@ -35,11 +34,15 @@ describe('CatsController', () => {
 
   describe('findAll', () => {
     it('should return an array of cats', async () => {
-      const result: CatDto[] = [{name: '', breed: '', color: '', type: Type.Persian, age: 0}];
-      
-      jest.spyOn(service, 'getAll').mockImplementation(() => Promise.resolve(result));
+      const result: CatDto[] = [
+        { name: '', breed: '', color: '', type: Type.Persian, age: 0 },
+      ];
 
-      expect(Array.isArray((await controller.getAll('', 0, 15)))).toBe(true);
+      jest
+        .spyOn(service, 'getAll')
+        .mockImplementation(() => Promise.resolve(result));
+
+      expect(Array.isArray(await controller.getAll('', 0, 15))).toBe(true);
     });
   });
 });

@@ -1,5 +1,5 @@
 export enum Type {
-    Persian = 'Persian',
-    Siamese = 'Siamese',
-    Abyssinian = 'Abyssinian'
+  Persian = 'Persian',
+  Siamese = 'Siamese',
+  Abyssinian = 'Abyssinian',
 }

@@ -1,22 +1,22 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Role } from "src/enums/role.enum";
+import { ApiProperty } from '@nestjs/swagger';
+import { Role } from 'src/enums/role.enum';
 
 export class CreateOwnerDto {
-    @ApiProperty()
-    name: string;
+  @ApiProperty()
+  name: string;
 
-    @ApiProperty()
-    user_name: string;
+  @ApiProperty()
+  user_name: string;
 
-    @ApiProperty()
-    password: string;
+  @ApiProperty()
+  password: string;
 
-    @ApiProperty()
-    email: string;
+  @ApiProperty()
+  email: string;
 
-    @ApiProperty()
-    phone_number: string;
+  @ApiProperty()
+  phone_number: string;
 
-    @ApiProperty({enum: ["user", "admin"]})
-    role: Role;
+  @ApiProperty({ enum: ['user', 'admin'] })
+  role: Role;
 }

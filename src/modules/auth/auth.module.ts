@@ -12,12 +12,9 @@ import { Owner } from 'src/modules/owners/owner.entity';
       global: true,
       secret: 'kolap',
       signOptions: { expiresIn: '60s' },
-    })
+    }),
   ],
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    JwtService
-  ]
+  providers: [AuthService, JwtService],
 })
 export class AuthModule {}

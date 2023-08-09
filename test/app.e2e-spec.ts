@@ -8,15 +8,25 @@ import { Type } from 'src/enums/type.enum';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
-  let appService = { findAll: () => [{name: 'hello', breed: 'hello', color: 'red', age: 10, type: Type.Abyssinian}] };
+  const appService = {
+    findAll: () => [
+      {
+        name: 'hello',
+        breed: 'hello',
+        color: 'red',
+        age: 10,
+        type: Type.Abyssinian,
+      },
+    ],
+  };
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
-    .overrideProvider(CatsService)
-    .useValue(appService)
-    .compile();
+      .overrideProvider(CatsService)
+      .useValue(appService)
+      .compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
@@ -24,18 +34,18 @@ describe('AppController (e2e)', () => {
 
   it('/ (GET)', () => {
     return request(app.getHttpServer())
-    .get('/')
-    .expect(200)
-    .expect(appService.findAll());
+      .get('/')
+      .expect(200)
+      .expect(appService.findAll());
   });
 
   it('/ (GET)', () => {
     return request(app.getHttpServer())
-    .get('/')
-    .then((result) => {
-      expect(result.statusCode).toEqual(200);
-      expect(Array.isArray(JSON.parse(result.text))).toEqual(true);
-    });
+      .get('/')
+      .then((result) => {
+        expect(result.statusCode).toEqual(200);
+        expect(Array.isArray(JSON.parse(result.text))).toEqual(true);
+      });
   });
 
   afterAll(async () => {

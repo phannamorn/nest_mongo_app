@@ -6,25 +6,21 @@ import * as request from 'supertest';
 
 describe('CatController (e2e)', () => {
   let app: INestApplication;
-  let catsService = { findAll: () => ['test'] };
+  const catsService = { findAll: () => ['test'] };
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       // imports: [CatsModule]
-    })
-    .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
   });
 
   it('/GET cats', () => {
-    return request(app.getHttpServer())
-      .get('/cats')
-      .expect(200)
-      .expect({
-        data: catsService.findAll()
-      });
+    return request(app.getHttpServer()).get('/cats').expect(200).expect({
+      data: catsService.findAll(),
+    });
   });
 
   // it('/cats (GET)', async () => {

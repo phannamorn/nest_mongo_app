@@ -10,27 +10,26 @@ import { FindOption } from 'src/types/find.option';
 @Injectable()
 export class CatsService {
   constructor(@InjectRepository(Cat) private catsRepository: Repository<Cat>) {}
-  // constructor(private catsRepository: CatRepository) {}
 
   async getAll(option: FilterOptions): Promise<CatDto[]> {
     const findOption: FindOption = {
       skip: Number(option.offset),
       take: Number(option.limit),
-      relations: { owner: true }
+      relations: { owner: true },
     };
-    
+
     const cats: CatDto[] = await this.catsRepository.find(findOption);
     return cats;
   }
 
   async getOne(id: number): Promise<CatDto> {
-    const cat: CatDto = await this.catsRepository.findOneBy({id});
+    const cat: CatDto = await this.catsRepository.findOneBy({ id });
     return cat;
   }
 
   async create(catDto: CatDto): Promise<CatDto> {
     if (catDto.age <= 0) {
-      catDto.age = 10
+      catDto.age = 10;
     }
 
     const cat: CatDto = await this.catsRepository.save(catDto);
@@ -38,10 +37,10 @@ export class CatsService {
   }
 
   update(id: number, catDto: CatDto): void {
-    this.catsRepository.update({id}, catDto);
+    this.catsRepository.update({ id }, catDto);
   }
 
   async delete(id: number) {
-    await this.catsRepository.delete({id});
+    await this.catsRepository.delete({ id });
   }
 }

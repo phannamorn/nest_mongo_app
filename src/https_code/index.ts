@@ -1,0 +1,4 @@
+export enum HttpCode {
+  EMAIL_TAKEN = 'EMAIL_TAKEN',
+  PHONE_NUMBER_TAKEN = 'PHONE_NUMBER_TAKEN',
+}

@@ -12,9 +12,9 @@ describe('CatsService', () => {
         CatsService,
         {
           provide: getRepositoryToken(Cat),
-          useValue: {}
-        }
-      ]
+          useValue: {},
+        },
+      ],
     }).compile();
 
     service = module.get<CatsService>(CatsService);

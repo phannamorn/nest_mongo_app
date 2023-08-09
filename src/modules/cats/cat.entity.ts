@@ -1,10 +1,5 @@
 import { Type } from 'src/enums/type.enum';
-import { 
-  Entity, 
-  PrimaryGeneratedColumn, 
-  Column, 
-  ManyToOne
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Owner } from '../owners/owner.entity';
 
 @Entity()
@@ -30,6 +25,6 @@ export class Cat {
   @Column()
   age: number;
 
-  @ManyToOne(() => Owner, owner => owner.cats)
+  @ManyToOne(() => Owner, (owner) => owner.cats)
   owner: Owner;
 }

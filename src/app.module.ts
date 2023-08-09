@@ -9,12 +9,15 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { Owner } from './modules/owners/owner.entity';
 import { AppController } from './app.controller';
-
+import { CustomersModule } from './modules/customers/customers.module';
+import { BankAccountModule } from './modules/bank_account/bank_account.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
+import { Customer } from './modules/customers/entities/customer.entity';
+import { Transaction } from './modules/transaction/transaction.entity';
+import { BankAccount } from './modules/bank_account/entities/bank_account.entity';
 @Module({
   controllers: [AppController],
-  providers: [
-    AppService
-  ],
+  providers: [AppService],
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
@@ -24,13 +27,22 @@ import { AppController } from './app.controller';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Cat, Owner],
-      logging: true
+      entities: [
+        Cat,
+        Owner,
+        Customer,
+        Transaction,
+        BankAccount
+      ],
+      logging: true,
     }),
     CatsModule,
     OwnersModule,
     AuthModule,
-    UsersModule
-  ]
+    UsersModule,
+    CustomersModule,
+    TransactionModule,
+    BankAccountModule,
+  ],
 })
 export class AppModule {}

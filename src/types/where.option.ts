@@ -1,5 +1,5 @@
 export type WhereOption = {
-    [key: string]: {
-        like: string
-    }
+  [key: string]: {
+    like: string;
+  };
 };

@@ -5,7 +5,6 @@ import { Cat } from '../cats/cat.entity';
 
 @Entity()
 export class Owner {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -21,7 +20,7 @@ export class Owner {
   @Column()
   access_token: string;
 
-  @Column({enum: ["user", "admin"]})
+  @Column({ enum: ['user', 'admin'] })
   role: Role;
 
   @Column()
@@ -33,7 +32,6 @@ export class Owner {
   @Column()
   phone_number: string;
 
-  @OneToMany(() => Cat, cat => cat.owner)
+  @OneToMany(() => Cat, (cat) => cat.owner)
   cats: Cat[];
 }
-
