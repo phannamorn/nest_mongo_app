@@ -5,6 +5,7 @@ import {
   Req,
   HttpCode,
   HttpStatus,
+  Ip,
   Body
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -20,12 +21,12 @@ export class AuthController {
   @Post('login')
   signIn(
     @Req() req: Request,
+    @Ip() ip: string,
     @Headers('username') username: string,
     @Headers('password') password: string,
   ) {
-    const userAgent = req.headers['user-agent'];
-    console.log('user agent:', userAgent);
-    return this.authService.signIn(username, password);
+    const userAgent = req.headers['user-agent'];console.log("DDDDD:", ip);
+    return this.authService.signIn(username, password, userAgent);
   }
 
   @HttpCode(HttpStatus.OK)

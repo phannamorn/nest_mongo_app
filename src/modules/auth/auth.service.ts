@@ -4,8 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
+import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Owner } from 'src/modules/owners/owner.entity';
 import { CreateOwnerDto } from 'src/modules/owners/create-owner.dto';
@@ -18,7 +18,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(user_name: string, password: string) {
+  async signIn(user_name: string, password: string, userAgent: string) {
     const user: Owner = await this.ownersRepository.findOne({where: { user_name }});
 
     if (!user) {
@@ -37,20 +37,18 @@ export class AuthService {
       scope: 'read'
     };
 
-    return {
-      access_token: await this.jwtService.signAsync(payload, {
-        secret: 'kolap',
-      }),
-    };
+    const accessToken = await this.jwtService.signAsync(payload, {secret: 'kolap'});
+
+    await this.ownersRepository.update({id: user.id}, {access_token: accessToken, user_agent: userAgent});
+
+    return {access_token: accessToken};
   }
 
   async register(createOwnerDto: CreateOwnerDto) {
     const saltOrRounds = 10;
     const hash = await bcrypt.hash(createOwnerDto.password, saltOrRounds);
     createOwnerDto.password = hash;
-    const owner: CreateOwnerDto = await this.ownersRepository.save(
-      createOwnerDto,
-    );
+    const owner: CreateOwnerDto = await this.ownersRepository.save(createOwnerDto);
     return owner;
   }
 }

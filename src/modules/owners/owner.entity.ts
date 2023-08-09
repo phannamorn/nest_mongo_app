@@ -20,6 +20,12 @@ export class Owner {
   @Column()
   access_token: string;
 
+  @Column()
+  user_agent: string;
+
+  @Column()
+  ip: string;
+
   @Column({ enum: ['user', 'admin'] })
   role: Role;
 
