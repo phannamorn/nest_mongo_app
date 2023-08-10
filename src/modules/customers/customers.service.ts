@@ -6,6 +6,8 @@ import { UpdateCustomerDto } from './update-customer.dto';
 import { Customer } from './entities/customer.entity';
 import { TopCustomer } from './dto/top-customer.dto';
 import { HttpCode } from 'src/https_code';
+import { FilterOptions } from 'src/types/filter.option';
+import { HighestScoreCustomer } from './dto/highest-score-customer.dto';
 
 @Injectable()
 export class CustomersService {
@@ -38,14 +40,30 @@ export class CustomersService {
     return customers;
   }
 
-  async getTopCustomersWithMostTransactions(): Promise<TopCustomer[]> {
+  async getTopCustomersWithMostTransactions(option: FilterOptions): Promise<TopCustomer[]> {
     const topCustomers: TopCustomer[] = await this.customerRepository
       .createQueryBuilder('C')
       .innerJoin('C.transactions', 'T')
       .select(['first_name', 'last_name', 'COUNT(T.id) AS total_transaction'])
+      .groupBy('T.customer_id')
+      .limit(option.limit)
       .getRawMany();
 
     return topCustomers;
+  }
+
+  async getHighestCreditScore(option: FilterOptions) {
+    const highestCreditScores: HighestScoreCustomer[] = await this.customerRepository.createQueryBuilder('C')
+    .select([
+      'first_name',
+      'last_name',
+      'credit_score'
+    ])
+    .orderBy('credit_score', 'DESC')
+    .limit(option.limit)
+    .getRawMany();
+
+    return highestCreditScores;
   }
 
   findOne(id: number) {

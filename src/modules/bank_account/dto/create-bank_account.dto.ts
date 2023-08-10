@@ -8,6 +8,9 @@ export class CreateBankAccountDto {
   @ApiProperty()
   customer_id: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    enum: BankAccountType,
+    example: [BankAccountType.CHECKING, BankAccountType.CREDIT, BankAccountType.PAYROLL, BankAccountType.SAVING]
+  })
   account_type: BankAccountType;
 }

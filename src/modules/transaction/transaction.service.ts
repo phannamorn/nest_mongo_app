@@ -1,26 +1,98 @@
-import { Injectable } from '@nestjs/common';
-import { CreateTransactionDto } from './create-transaction.dto';
-import { UpdateTransactionDto } from './update-transaction.dto';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Transaction } from './transaction.entity';
+import { DepositDto } from '../bank_account/dto/deposit.dto';
+import { BankAccount } from '../bank_account/entities/bank_account.entity';
+import { HttpCode } from 'src/https_code';
+import { BankAccountStatus } from 'src/enums/bank_account_status.enum';
+import { TransferDto } from '../bank_account/dto/transfer.dto';
+import { TransactionType } from 'src/enums/transaction.type.enum';
+import { WithdrawDto } from '../bank_account/dto/withdraw.dto';
+import { Util } from 'src/helpers/util.helper';
+import { BankAccountRepository } from '../bank_account/bank_account.repository';
 
 @Injectable()
 export class TransactionService {
-  create(createTransactionDto: CreateTransactionDto) {
-    return 'This action adds a new transaction';
+  constructor(
+    @InjectRepository(Transaction) private transactionRepository: Repository<Transaction>,
+    // @InjectRepository(BankAccount) private bankAccountRepository: Repository<BankAccount>
+    private readonly bankAccountRepository: BankAccountRepository
+  ) {}
+  
+  async deposit(depositDto: DepositDto) {
+    const bankAccount = await this.bankAccountRepository.getBankAccountById(depositDto.bank_account_id);
+
+    const transaction = this.transactionRepository.save({
+      ...depositDto,
+      transaction_date: new Date(),
+      transaction_type: TransactionType.DEPOSIT
+    });
+
+    const balance = Util.getInstance().updateBalanceAfterDeposit(bankAccount.balance, depositDto.amount);
+
+    await this.bankAccountRepository.update({id: depositDto.bank_account_id}, {balance});
+
+    return transaction;
+  }
+
+  async transfer(transferDto: TransferDto) {
+    const sourceBankAccount = await this.bankAccountRepository.getBankAccountById(transferDto.bank_account_id);
+    const targetBankAccount = await this.bankAccountRepository.getBankAccountById(transferDto.reference_account_id);
+    const transferAmount: number = transferDto.amount;
+
+    const transaction = await this.transactionRepository.save({
+      ...transferDto,
+      transaction_date: new Date(),
+      transaction_type: TransactionType.TRANSFER
+    });
+
+    // Update source balance in source bank acount
+    const sourceBalance: number = Util.getInstance().updateBalanceAfterTransferOut(sourceBankAccount.balance, transferAmount);
+    await this.bankAccountRepository.update({id: transferDto.bank_account_id}, {balance: sourceBalance});
+
+    // Update source balance in target bank acount
+    const targetBalance: number = Util.getInstance().updateBalanceAfterReceiveTransfer(targetBankAccount.balance, transferAmount);
+    await this.bankAccountRepository.update({id: transferDto.reference_account_id}, {balance: targetBalance});
+    
+    return transaction;
+  }
+
+  async withdraw(withdrawDto: WithdrawDto) {
+    const bankAccount = await this.bankAccountRepository.getBankAccountById(withdrawDto.bank_account_id);
+
+    const withdraw = this.transactionRepository.save({
+      ...withdrawDto,
+      transaction_date: new Date(),
+      transaction_type: TransactionType.WITHDRAW
+    });
+
+    const balance = Util.getInstance().updateBalanceAfterWithdraw(bankAccount.balance, withdrawDto.amount);
+
+    this.bankAccountRepository.update({id: withdrawDto.bank_account_id}, {balance});
+    
+    return withdraw;
   }
 
   findAll() {
-    return `This action returns all transaction`;
+    const query = this.transactionRepository.createQueryBuilder('T');
+    const transactions = query.innerJoin('T.bankAccount', 'B')
+    .innerJoin('B.customer', 'C')
+    .select([
+      'B.account_number AS account_number',
+      'C.first_name AS first_name',
+      'C.last_name AS last_name',
+      'T.transaction_type AS transaction_type',
+      'T.amount AS amount',
+      'DATE_FORMAT(T.transaction_date, "%Y-%m-%d") AS transaction_date'
+    ])
+    .getRawMany();
+
+    return transactions;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} transaction`;
-  }
-
-  update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    return `This action updates a #${id} transaction`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} transaction`;
+    const transaction = this.transactionRepository.findOne({where: {id}});
+    return transaction;
   }
 }

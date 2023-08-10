@@ -1,5 +1,4 @@
-import { Transaction } from 'src/modules/transaction/transaction.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Customer {
@@ -18,6 +17,6 @@ export class Customer {
   @Column()
   phone_number: string;
 
-  @OneToMany(() => Transaction, (transactions) => transactions.customer)
-  transactions: Transaction[];
+  @Column()
+  credit_score: number;
 }

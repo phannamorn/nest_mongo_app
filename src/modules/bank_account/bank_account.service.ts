@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, DataSource, EntityManager } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { CreateBankAccountDto } from './dto/create-bank_account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank_account.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BankAccount } from './entities/bank_account.entity';
-import { DepositDto } from './dto/deposit.dto';
+import { Util } from 'src/helpers/util.helper';
 
 @Injectable()
 export class BankAccountService {
@@ -22,6 +22,8 @@ export class BankAccountService {
   //   const manager: EntityManager = queryRunner.manager;
 
   //   try {
+  //     const encryptedBankAccNo: string = Util.getInstance().rsaEncrypt(bankAccountDto.account_number);
+  //     console.log("DDDDD:", encryptedBankAccNo);
   //     bankAccount = await manager.save(bankAccountDto);
   //   } catch (error) {
   //     await queryRunner.rollbackTransaction();
@@ -37,15 +39,14 @@ export class BankAccountService {
     return bankAccount;
   }
 
-  async deposit(depositDto: DepositDto) {}
-
   async findAll(): Promise<BankAccount[]> {
     const bankAccounts: BankAccount[] = await this.bankAccountRepository.find();
     return bankAccounts;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} bankAccount`;
+  async findOne(id: number): Promise<BankAccount> {
+    const bankAccount = await this.bankAccountRepository.findOne({where: {id}});
+    return bankAccount;
   }
 
   update(id: number, updateBankAccountDto: UpdateBankAccountDto) {

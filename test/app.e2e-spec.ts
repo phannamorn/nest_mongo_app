@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from 'src/app.module';
 // import { AppService } from 'src/app.service';
-import { CatsService } from 'src/modules/cats/cats.service.e2e';
+import { CatsService } from 'src/modules/cats/cats.service';
 import { Type } from 'src/enums/type.enum';
 
 describe('AppController (e2e)', () => {

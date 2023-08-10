@@ -6,7 +6,8 @@ export class Transaction1691546786823 implements MigrationInterface {
         await queryRunner.query(`
             CREATE TABLE transaction (
                 id INT NOT NULL AUTO_INCREMENT,
-                account_number VARCHAR(255) NOT NULL,
+                bank_account_id int,
+                reference_account_id int,
                 transaction_type enum('deposit', 'withdraw', 'transfer'),
                 amount INT NOT NULL,
                 transaction_date DATETIME NOT NULL,

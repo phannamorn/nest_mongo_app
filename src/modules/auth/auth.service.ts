@@ -18,7 +18,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(user_name: string, password: string, userAgent: string) {
+  async signIn(user_name: string, password: string, ip: string, userAgent: string) {
     const user: Owner = await this.ownersRepository.findOne({where: { user_name }});
 
     if (!user) {
@@ -39,7 +39,7 @@ export class AuthService {
 
     const accessToken = await this.jwtService.signAsync(payload, {secret: 'kolap'});
 
-    await this.ownersRepository.update({id: user.id}, {access_token: accessToken, user_agent: userAgent});
+    await this.ownersRepository.update({id: user.id}, {access_token: accessToken, ip, user_agent: userAgent});
 
     return {access_token: accessToken};
   }

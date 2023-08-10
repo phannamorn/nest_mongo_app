@@ -3,24 +3,36 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
-  Put,
+  UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { TransactionService } from './transaction.service';
-import { CreateTransactionDto } from './create-transaction.dto';
-import { UpdateTransactionDto } from './update-transaction.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { DepositDto } from '../bank_account/dto/deposit.dto';
+import { TransferDto } from '../bank_account/dto/transfer.dto';
+import { AuthGuard } from '../auth/auth.guard';
+import { WithdrawDto } from '../bank_account/dto/withdraw.dto';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('transactions')
 @ApiTags('transactions')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
-  @Post()
-  create(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionService.create(createTransactionDto);
+  @Post('deposit')
+  deposit(@Body() depositDto: DepositDto) {
+    return this.transactionService.deposit(depositDto);
+  }
+
+  @Post('transfer')
+  transfer(@Body() transferDto: TransferDto) {
+    return this.transactionService.transfer(transferDto);
+  }
+
+  @Post('withdraw')
+  withdraw(@Body() withdrawDto: WithdrawDto) {
+    return this.transactionService.withdraw(withdrawDto);
   }
 
   @Get()
@@ -31,18 +43,5 @@ export class TransactionController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.transactionService.findOne(+id);
-  }
-
-  @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateTransactionDto: UpdateTransactionDto,
-  ) {
-    return this.transactionService.update(+id, updateTransactionDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionService.remove(+id);
   }
 }

@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { BankAccountType } from 'src/enums/account.type.enum';
-import { Customer } from '../customers/entities/customer.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { TransactionType } from 'src/enums/transaction.type.enum';
+import { BankAccount } from '../bank_account/entities/bank_account.entity';
 
 @Entity()
 export class Transaction {
@@ -8,10 +8,13 @@ export class Transaction {
   id: number;
 
   @Column()
-  account_Number: string;
+  bank_account_id: number;
 
   @Column()
-  transaction_type: BankAccountType;
+  reference_account_id: number;
+
+  @Column()
+  transaction_type: TransactionType;
 
   @Column()
   amount: number;
@@ -19,6 +22,7 @@ export class Transaction {
   @Column()
   transaction_date: Date;
 
-  @ManyToOne(() => Customer, (customer) => customer.transactions)
-  customer: Customer;
+  @OneToOne(() => BankAccount)
+  @JoinColumn({name: 'bank_account_id'})
+  bankAccount: BankAccount;
 }

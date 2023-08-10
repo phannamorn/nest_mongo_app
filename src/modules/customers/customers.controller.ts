@@ -9,11 +9,16 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { 
+  ApiBearerAuth,
+  ApiResponse,
+  ApiTags
+} from '@nestjs/swagger';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './update-customer.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { FilterOptions } from 'src/types/filter.option';
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
@@ -49,8 +54,17 @@ export class CustomersController {
   }
 
   @Get('/top-transactions')
-  getTopTransactions(@Query('limit') limit: number) {}
+  getTopTransactions(@Query('limit') limit: number) {
+    const option: FilterOptions = { limit };
+    return this.customersService.getTopCustomersWithMostTransactions(option);
+  }
 
+  @Get('/highest-credit')
+  getHighestCreditScore(@Query('limit') limit: number) {
+    const option: FilterOptions = { limit };
+    return this.customersService.getHighestCreditScore(option);
+  }
+  
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.customersService.findOne(+id);

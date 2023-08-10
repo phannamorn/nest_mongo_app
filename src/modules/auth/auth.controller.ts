@@ -25,8 +25,8 @@ export class AuthController {
     @Headers('username') username: string,
     @Headers('password') password: string,
   ) {
-    const userAgent = req.headers['user-agent'];console.log("DDDDD:", ip);
-    return this.authService.signIn(username, password, userAgent);
+    const userAgent = req.headers['user-agent'];
+    return this.authService.signIn(username, password, ip, userAgent);
   }
 
   @HttpCode(HttpStatus.OK)

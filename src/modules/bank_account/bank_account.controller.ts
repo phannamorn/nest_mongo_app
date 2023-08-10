@@ -11,7 +11,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { BankAccountService } from './bank_account.service';
 import { CreateBankAccountDto } from './dto/create-bank_account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank_account.dto';
-import { DepositDto } from './dto/deposit.dto';
 
 @Controller('bank_accounts')
 @ApiTags('bank_accounts')
@@ -23,19 +22,14 @@ export class BankAccountController {
     return this.bankAccountService.createBankAccount(createBankAccountDto);
   }
 
-  @Post('deposit')
-  deposit(@Body() depositDto: DepositDto) {
-    
-  }
-
   @Get()
   findAll() {
     return this.bankAccountService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bankAccountService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.bankAccountService.findOne(id);
   }
 
   @Put(':id')
