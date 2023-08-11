@@ -18,6 +18,7 @@ import { BankAccount } from './modules/bank_account/entities/bank_account.entity
 import { RolesModule } from './modules/roles/roles.module';
 import { Session } from './modules/auth/session.entity';
 import { User } from './modules/users/entities/user.entity';
+import { Role } from './modules/roles/entities/role.entity';
 @Module({
   controllers: [AppController],
   providers: [AppService],
@@ -32,6 +33,7 @@ import { User } from './modules/users/entities/user.entity';
       database: process.env.DB_NAME,
       entities: [
         User,
+        Role,
         Cat,
         Owner,
         Customer,
