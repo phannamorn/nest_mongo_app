@@ -15,6 +15,9 @@ import { TransactionModule } from './modules/transaction/transaction.module';
 import { Customer } from './modules/customers/entities/customer.entity';
 import { Transaction } from './modules/transaction/transaction.entity';
 import { BankAccount } from './modules/bank_account/entities/bank_account.entity';
+import { RolesModule } from './modules/roles/roles.module';
+import { Session } from './modules/auth/session.entity';
+import { User } from './modules/users/entities/user.entity';
 @Module({
   controllers: [AppController],
   providers: [AppService],
@@ -28,11 +31,13 @@ import { BankAccount } from './modules/bank_account/entities/bank_account.entity
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [
+        User,
         Cat,
         Owner,
         Customer,
         Transaction,
-        BankAccount
+        BankAccount,
+        Session
       ],
       logging: true,
     }),
@@ -43,6 +48,7 @@ import { BankAccount } from './modules/bank_account/entities/bank_account.entity
     CustomersModule,
     TransactionModule,
     BankAccountModule,
+    RolesModule,
   ],
 })
 export class AppModule {}

@@ -51,6 +51,7 @@
     a. NGINX
 
 12. Logging
+    a. Use server logging
 
 13. Regular Express
 
@@ -73,3 +74,5 @@
 16. Cache Server
 17. Elastic Search
 18. Protect Attacker
+19. Docker
+20. Logging

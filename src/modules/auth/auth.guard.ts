@@ -6,23 +6,32 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
 import { plainToClass } from 'class-transformer';
 import { Request } from 'express';
+import { Repository } from 'typeorm';
 import { TokenPayload } from 'src/types/token.payload';
+import { Session } from './session.entity';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    @InjectRepository(Session) private sessionRepository: Repository<Session>
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
-    if (!token) {
+    const accessToken = this.extractTokenFromHeader(request);
+    
+    const session = await this.sessionRepository.findOne({where: {accessToken}, select: ["accessToken"]});
+
+    if (!session) {
       throw new UnauthorizedException();
     }
 
-    const decoded: TokenPayload = plainToClass(TokenPayload, this.jwtService.decode(token));
-
+    const decoded: TokenPayload = plainToClass(TokenPayload, this.jwtService.decode(session.accessToken));
+    
     if (!decoded.sub) {
       throw new UnauthorizedException('Invalid access token');
     }
@@ -32,14 +41,13 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: 'kolap',
-      });
+      const payload = await this.jwtService.verifyAsync(session.accessToken, {secret: 'kolap'});
 
       request['user'] = payload;
     } catch {
       throw new UnauthorizedException();
     }
+
     return true;
   }
 

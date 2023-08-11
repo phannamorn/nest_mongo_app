@@ -18,8 +18,8 @@ import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from 'src/modules/auth/auth.guard';
 import { Role } from 'src/enums/role.enum';
 import { FilterOptions } from 'src/types/filter.option';
+import { ROLES_KEY } from 'src/enums/role_key.enum';
 
-export const ROLES_KEY = 'roles';
 export const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);
 
 @ApiBearerAuth()

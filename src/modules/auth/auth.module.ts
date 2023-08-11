@@ -3,11 +3,12 @@ import { JwtModule, JwtService } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { Owner } from 'src/modules/owners/owner.entity';
+import { Session } from './session.entity';
+import { User } from '../users/entities/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Owner]),
+    TypeOrmModule.forFeature([User, Session]),
     JwtModule.register({
       global: true,
       secret: 'kolap',
@@ -15,6 +16,9 @@ import { Owner } from 'src/modules/owners/owner.entity';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtService],
+  providers: [
+    AuthService,
+    JwtService
+  ],
 })
 export class AuthModule {}

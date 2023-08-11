@@ -7,19 +7,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Owner } from 'src/modules/owners/owner.entity';
-import { CreateOwnerDto } from 'src/modules/owners/create-owner.dto';
 import { TokenPayload } from 'src/types/token.payload';
+import { Session } from './session.entity';
+import { User } from '../users/entities/user.entity';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(Owner) private ownersRepository: Repository<Owner>,
-    private jwtService: JwtService,
+    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Session) private sessionRepository: Repository<Session>,
+    private jwtService: JwtService
   ) {}
 
-  async signIn(user_name: string, password: string, ip: string, userAgent: string) {
-    const user: Owner = await this.ownersRepository.findOne({where: { user_name }});
+  async signIn(userName: string, password: string, ip: string, userAgent: string) {
+    const user: User = await this.userRepository.findOne({where: { userName }});
 
     if (!user) {
       throw new NotFoundException('Account does not exist. Please create an account or try again with a different username.');
@@ -33,22 +35,22 @@ export class AuthService {
 
     const payload: TokenPayload = { 
       sub: user.id,
-      user_name,
+      userName,
       scope: 'read'
     };
 
-    const accessToken = await this.jwtService.signAsync(payload, {secret: 'kolap'});
+    const accessToken = await this.jwtService.signAsync(payload, {secret: 'kolap', expiresIn: '30d'});
 
-    await this.ownersRepository.update({id: user.id}, {access_token: accessToken, ip, user_agent: userAgent});
+    this.sessionRepository.insert({userId: user.id, accessToken, userAgent, ip});
 
     return {access_token: accessToken};
   }
 
-  async register(createOwnerDto: CreateOwnerDto) {
+  async register(createUserDto: CreateUserDto) {
     const saltOrRounds = 10;
-    const hash = await bcrypt.hash(createOwnerDto.password, saltOrRounds);
-    createOwnerDto.password = hash;
-    const owner: CreateOwnerDto = await this.ownersRepository.save(createOwnerDto);
-    return owner;
+    const hash = await bcrypt.hash(createUserDto.password, saltOrRounds);
+    createUserDto.password = hash;
+    const user = await this.userRepository.save(createUserDto);
+    return user;
   }
 }

@@ -1,11 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Transaction } from './transaction.entity';
 import { DepositDto } from '../bank_account/dto/deposit.dto';
-import { BankAccount } from '../bank_account/entities/bank_account.entity';
-import { HttpCode } from 'src/https_code';
-import { BankAccountStatus } from 'src/enums/bank_account_status.enum';
 import { TransferDto } from '../bank_account/dto/transfer.dto';
 import { TransactionType } from 'src/enums/transaction.type.enum';
 import { WithdrawDto } from '../bank_account/dto/withdraw.dto';
@@ -16,7 +13,6 @@ import { BankAccountRepository } from '../bank_account/bank_account.repository';
 export class TransactionService {
   constructor(
     @InjectRepository(Transaction) private transactionRepository: Repository<Transaction>,
-    // @InjectRepository(BankAccount) private bankAccountRepository: Repository<BankAccount>
     private readonly bankAccountRepository: BankAccountRepository
   ) {}
   
