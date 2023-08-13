@@ -22,10 +22,10 @@ describe('RolesController', () => {
       providers: [
         RolesService,
         {
-            provide: RolesService,
-            useValue: mockRolesService
-        }
-    ],
+          provide: RolesService,
+          useValue: mockRolesService,
+        },
+      ],
     }).compile();
 
     controller = module.get<RolesController>(RolesController);
@@ -37,12 +37,12 @@ describe('RolesController', () => {
 
   it('create => should create a new role by a given data', async () => {
     const createRoleDto = {
-      name: 'Admin'
+      name: 'Admin',
     } as CreateRoleDto;
 
     const role = {
       id: Date.now(),
-      name: 'Admin'
+      name: 'Admin',
     } as Role;
 
     jest.spyOn(mockRolesService, 'create').mockReturnValue(role);
@@ -123,7 +123,7 @@ describe('RolesController', () => {
     const id = '1';
     const role = {
       id: 1,
-      name: 'Admin'
+      name: 'Admin',
     };
 
     jest.spyOn(mockRolesService, 'remove').mockReturnValue(role);

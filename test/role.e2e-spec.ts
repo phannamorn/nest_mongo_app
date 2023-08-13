@@ -1,26 +1,52 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-// import { CatsModule } from 'src/cats/cats.module';
+import { RolesModule } from 'src/modules/roles/roles.module';
+import { RolesService } from 'src/modules/roles/roles.service';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Role } from 'src/modules/roles/entities/role.entity';
+import { User } from 'src/modules/users/entities/user.entity';
 // import { Type } from 'src/enums/type.enum';
 
-describe('CatController (e2e)', () => {
+describe('RoleController (e2e)', () => {
   let app: INestApplication;
-  const catsService = { findAll: () => ['test'] };
+  const rolesService = { findAll: () => ['test'] };
+
+  const mockRoleRepository = {
+    save: jest.fn(),
+    find: jest.fn(),
+    findOne: jest.fn(),
+    delete: jest.fn(),
+  };
+
+  const mockUserRepository = {
+    save: jest.fn(),
+    find: jest.fn(),
+    findOne: jest.fn(),
+    delete: jest.fn(),
+  };
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      // imports: [CatsModule]
-    }).compile();
+      imports: [RolesModule],
+    })
+      .overrideProvider(RolesService)
+      .useValue(rolesService)
+      .overrideProvider(getRepositoryToken(Role))
+      .useValue(mockRoleRepository)
+      .overrideProvider(getRepositoryToken(User))
+      .useValue(mockUserRepository)
+      .compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
   });
 
-  it('/GET cats', () => {
-    return request(app.getHttpServer()).get('/cats').expect(200).expect({
-      data: catsService.findAll(),
-    });
+  it('/GET roles', () => {
+    return request(app.getHttpServer())
+      .get('/roles')
+      .expect(200)
+      .expect(rolesService.findAll());
   });
 
   // it('/cats (GET)', async () => {

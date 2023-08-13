@@ -10,11 +10,11 @@ import { User } from '../users/entities/user.entity';
 export class RolesService {
   constructor(
     @InjectRepository(Role) private roleRepository: Repository<Role>,
-    @InjectRepository(User) private userRepository: Repository<User>
+    @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
   create(createRoleDto: CreateRoleDto) {
-    const user = this.userRepository.findOne({where: {id: 3}});
+    const user = this.userRepository.findOne({ where: { id: 3 } });
     const role = this.roleRepository.save(createRoleDto);
     return role;
   }
@@ -24,14 +24,14 @@ export class RolesService {
   }
 
   findOne(id: number) {
-    return this.roleRepository.findOne({where: {id}});
+    return this.roleRepository.findOne({ where: { id } });
   }
 
   update(id: number, updateRoleDto: UpdateRoleDto) {
-    return this.roleRepository.update({id}, updateRoleDto);
+    return this.roleRepository.update({ id }, updateRoleDto);
   }
 
   remove(id: number) {
-    return this.roleRepository.delete({id});
+    return this.roleRepository.delete({ id });
   }
 }

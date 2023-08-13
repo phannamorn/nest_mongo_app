@@ -19,7 +19,7 @@ describe('RolesService', () => {
     save: jest.fn(),
     find: jest.fn(),
     findOne: jest.fn(),
-    delete: jest.fn()
+    delete: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -31,9 +31,9 @@ describe('RolesService', () => {
           useValue: mockRoleRepository,
         },
         {
-            provide: getRepositoryToken(User),
-            useValue: mockUserRepository
-        }
+          provide: getRepositoryToken(User),
+          useValue: mockUserRepository,
+        },
       ],
     }).compile();
 
@@ -46,12 +46,12 @@ describe('RolesService', () => {
 
   it('create => Should create a new role and return its data', async () => {
     const createRoleDto = {
-        name: 'Admin'
+      name: 'Admin',
     } as CreateRoleDto;
 
     const role = {
-        id: Date.now(),
-        name: 'Admin'
+      id: Date.now(),
+      name: 'Admin',
     } as Role;
 
     jest.spyOn(mockRoleRepository, 'save').mockReturnValue(role);
@@ -68,7 +68,7 @@ describe('RolesService', () => {
     //arrange
     const role = {
       id: Date.now(),
-      name: 'Admin'
+      name: 'Admin',
     };
     const roles = [role];
     jest.spyOn(mockRoleRepository, 'find').mockReturnValue(roles);
@@ -86,7 +86,7 @@ describe('RolesService', () => {
     const id = 1;
     const role = {
       id: 1,
-      name: 'Admin'
+      name: 'Admin',
     };
 
     jest.spyOn(mockRoleRepository, 'findOne').mockReturnValue(role);
@@ -102,7 +102,7 @@ describe('RolesService', () => {
     const id = 1;
     const role = {
       id: 1,
-      name: 'Admin'
+      name: 'Admin',
     };
 
     jest.spyOn(mockRoleRepository, 'delete').mockReturnValue(role);
@@ -112,6 +112,6 @@ describe('RolesService', () => {
 
     expect(result).toEqual(role);
     expect(mockRoleRepository.delete).toBeCalled();
-    expect(mockRoleRepository.delete).toBeCalledWith({id});
+    expect(mockRoleRepository.delete).toBeCalledWith({ id });
   });
 });
