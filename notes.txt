@@ -79,4 +79,3 @@ Priority
 18. Protect Attacker
 19. Docker
 20. Logging
-21. Hello
