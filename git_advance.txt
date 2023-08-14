@@ -4,4 +4,14 @@ git stash [-m]
 git stash list
 git stash clear
 git staff apply <stash_entry_name>
-git stash pop <stash_entry_name>
+git stash pop <stash_entry_name>: You can also pop a stash entry, which will remove it from the stash list and restore the changes to the working directory and the index.
+git revert <commit_hash>: to undo a commit without losing the changes. This can be useful if you made a mistake in a commit but you still want to keep the changes.
+git reset <mode> <commit_hash>:  to undo changes that have been committed to the repository. This can be useful if you made a mistake in a commit or if you want to start over on a branch.
+    There are three main modes of the git reset command:
+        1. soft: This mode will reset the HEAD pointer to the specified commit, but it will not remove the changes from the working directory or the index. This can be useful if you want to undo a commit but you still want to keep the changes.
+        2. mixed: This mode will reset the HEAD pointer to the specified commit and it will remove the changes from the index. This can be useful if you want to undo a commit and start over from scratch.
+        3. hard: This mode will reset the HEAD pointer to the specified commit and it will remove the changes from the working directory and the index. This can be useful if you want to undo a commit and completely erase the changes.
+    There are three tips for using git reset:
+        1. You can use the -n option with the git reset command to preview the changes that will be made without actually performing the reset. This can be helpful if you want to make sure that the reset is going to do what you want it to do.
+        2. You can use the -f option with the git reset command to force the reset to be performed, even if there are conflicts. This can be useful if you are sure that you want to reset the commit and you don't care about the conflicts.
+        3. You can use the -m <message> option with the git reset command to add a custom message to the commit. This can be helpful if you want to explain why you are resetting the commit.
