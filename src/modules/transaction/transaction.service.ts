@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 import { Transaction } from './transaction.entity';
 import { DepositDto } from '../bank_account/dto/deposit.dto';
 import { TransferDto } from '../bank_account/dto/transfer.dto';
@@ -8,12 +10,16 @@ import { TransactionType } from 'src/enums/transaction.type.enum';
 import { WithdrawDto } from '../bank_account/dto/withdraw.dto';
 import { Util } from 'src/helpers/util.helper';
 import { BankAccountRepository } from '../bank_account/bank_account.repository';
+import { SummaryTransaction, SummaryTransactionDocument } from 'src/summary_transaction/schema/summary_transaction.entity';
+import { BankAccountType } from 'src/enums/account.type.enum';
 
 @Injectable()
 export class TransactionService {
   constructor(
     @InjectRepository(Transaction) private transactionRepository: Repository<Transaction>,
-    private readonly bankAccountRepository: BankAccountRepository
+    @InjectModel(SummaryTransaction.name) private readonly model: Model<SummaryTransactionDocument>,
+    private readonly bankAccountRepository: BankAccountRepository,
+
   ) {}
   
   async deposit(depositDto: DepositDto) {
@@ -27,7 +33,14 @@ export class TransactionService {
 
     const balance = Util.getInstance().updateBalanceAfterDeposit(bankAccount.balance, depositDto.amount);
 
-    await this.bankAccountRepository.update({id: depositDto.bank_account_id}, {balance});
+    this.bankAccountRepository.update({id: depositDto.bank_account_id}, {balance});
+
+    new this.model({
+      accountNumber: bankAccount.account_number, 
+      type: TransactionType.DEPOSIT, 
+      date: new Date(), 
+      amount: depositDto.amount
+    }).save();
 
     return transaction;
   }
@@ -45,11 +58,19 @@ export class TransactionService {
 
     // Update source balance in source bank acount
     const sourceBalance: number = Util.getInstance().updateBalanceAfterTransferOut(sourceBankAccount.balance, transferAmount);
-    await this.bankAccountRepository.update({id: transferDto.bank_account_id}, {balance: sourceBalance});
+    this.bankAccountRepository.update({id: transferDto.bank_account_id}, {balance: sourceBalance});
 
     // Update source balance in target bank acount
     const targetBalance: number = Util.getInstance().updateBalanceAfterReceiveTransfer(targetBankAccount.balance, transferAmount);
-    await this.bankAccountRepository.update({id: transferDto.reference_account_id}, {balance: targetBalance});
+    this.bankAccountRepository.update({id: transferDto.reference_account_id}, {balance: targetBalance});
+
+    new this.model({
+      accountNumber: sourceBankAccount.account_number,
+      referenceAccountNumber: targetBankAccount.account_number,
+      type: TransactionType.TRANSFER, 
+      date: new Date(), 
+      amount: transferDto.amount
+    }).save();
     
     return transaction;
   }
@@ -66,6 +87,13 @@ export class TransactionService {
     const balance = Util.getInstance().updateBalanceAfterWithdraw(bankAccount.balance, withdrawDto.amount);
 
     this.bankAccountRepository.update({id: withdrawDto.bank_account_id}, {balance});
+
+    new this.model({
+      accountNumber: bankAccount.account_number,
+      type: TransactionType.WITHDRAW, 
+      date: new Date(), 
+      amount: withdrawDto.amount
+    }).save();
     
     return withdraw;
   }

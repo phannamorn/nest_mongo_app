@@ -7,7 +7,9 @@ import { CatRepository } from './cat.repository';
 import { Session } from '../auth/session.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Cat, CatRepository, Session])],
+  imports: [
+    TypeOrmModule.forFeature([Cat, CatRepository, Session])
+  ],
   controllers: [CatsController],
   providers: [CatsService],
 })
