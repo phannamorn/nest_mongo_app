@@ -53,7 +53,7 @@
 12. Logging
     a. Use server logging
 
-13. Regular Express
+13. Regular Expression
 
 14. Proxy Server: is a server that acts as an intermediary between a client and a server. 
     When a client requests a resource from a server, the proxy server receives the request and forwards it to the server. 
@@ -67,8 +67,8 @@
         Security: Proxy servers can be used to filter traffic and protect clients from malicious websites.
         Anonymity: Proxy servers can be used to hide a client's IP address, which can be useful for privacy or bypassing censorship.
         Load balancing: Proxy servers can be used to distribute traffic across multiple servers, which can improve performance.
-    a. Forward proxy server: are used to connect clients to servers. Reverse proxy servers are used to connect servers to clients.
-    b. Reverse proxy server
+    a. Forward proxy server: are used to connect clients to servers.
+    b. Reverse proxy server: Reverse proxy servers are used to connect servers to clients.
 
 15. Git Advance
 16. Cache Server
