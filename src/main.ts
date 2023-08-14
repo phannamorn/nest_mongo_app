@@ -19,6 +19,7 @@ async function bootstrap() {
     .addTag('customers')
     .addTag('bank_accounts')
     .addTag('transactions')
+    .addTag('reports')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
