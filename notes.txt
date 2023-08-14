@@ -1,3 +1,6 @@
+Priority
+    1. AWS
+    2. MongoDB
 1. Security
     a. Create entity to map with database[Done]
     b. Implementation authentication[Done]

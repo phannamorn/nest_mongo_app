@@ -6,11 +6,13 @@ import { RolesService } from 'src/modules/roles/roles.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Role } from 'src/modules/roles/entities/role.entity';
 import { User } from 'src/modules/users/entities/user.entity';
+import { RolesController } from 'src/modules/roles/roles.controller';
 // import { Type } from 'src/enums/type.enum';
 
 describe('RoleController (e2e)', () => {
   let app: INestApplication;
-  const rolesService = { findAll: () => ['test'] };
+  let controller: RolesController;
+  const rolesService = { findAll: jest.fn() };
 
   const mockRoleRepository = {
     save: jest.fn(),
@@ -38,37 +40,37 @@ describe('RoleController (e2e)', () => {
       .useValue(mockUserRepository)
       .compile();
 
+    controller = moduleFixture.get<RolesController>(RolesController);
+
     app = moduleFixture.createNestApplication();
     await app.init();
   });
 
-  it('/GET roles', () => {
-    return request(app.getHttpServer())
-      .get('/roles')
-      .expect(200)
-      .expect(rolesService.findAll());
+  it('should be define', () => {
+    expect(controller).toBeDefined();
   });
 
-  // it('/cats (GET)', async () => {
-  //   return request(app.getHttpServer())
-  //     .get('/cats')
-  //     .expect(200)
-  //     .expect({
-  //       data: catsService.findAll(),
-  //     });
-  // });
+  describe('/roles (GET)', () => {
+    jest.spyOn(rolesService, 'findAll');
 
-  // it('/cats/:id (GET)', async () => {
-  //   const catId = '1';
-  //   const response = await request(app.getHttpServer())
-  //     .get(`/cats/${catId}`)
-  //     .expect(200);
+    it('should be define', () => {
+      expect(rolesService.findAll).toBeDefined();
+    });
 
-  //   // const cat = await response.json();
-  //   const cat = {id: 1};
-  //   expect(cat).toBeDefined();
-  //   expect(cat.id).toEqual(catId);
-  // });
+    it('should call service.findAll', () => {
+      controller.findAll();
+      expect(rolesService.findAll).toBeCalledTimes(1);
+    });
+
+    it('/GET roles', () => {
+      return request(app.getHttpServer()).get('/roles').expect(200);
+    });
+  });
+
+  it('/roles/:id (GET)', async () => {
+    const roleId = '1';
+    await request(app.getHttpServer()).get(`/roles/${roleId}`).expect(200);
+  });
 
   // it('/cats (POST)', async () => {
   //   const cat = {
