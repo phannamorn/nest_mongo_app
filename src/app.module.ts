@@ -21,6 +21,7 @@ import { Session } from './modules/auth/session.entity';
 import { User } from './modules/users/entities/user.entity';
 import { Role } from './modules/roles/entities/role.entity';
 import { SummaryTransactionModule } from './summary_transaction/summary_transaction.module';
+import { ReportsModule } from './modules/reports/reports.module';
 
 @Module({
   controllers: [AppController],
@@ -56,6 +57,7 @@ import { SummaryTransactionModule } from './summary_transaction/summary_transact
     BankAccountModule,
     RolesModule,
     SummaryTransactionModule,
+    ReportsModule
   ],
 })
 export class AppModule {}

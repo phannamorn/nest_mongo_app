@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import * as moment from 'moment';
 import { Transaction } from './transaction.entity';
@@ -19,7 +19,6 @@ export class TransactionService {
     @InjectRepository(Transaction) private transactionRepository: Repository<Transaction>,
     @InjectModel(SummaryTransaction.name) private readonly model: Model<SummaryTransactionDocument>,
     private readonly bankAccountRepository: BankAccountRepository,
-
   ) {}
   
   async deposit(depositDto: DepositDto) {
