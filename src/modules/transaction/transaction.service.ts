@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import * as moment from 'moment';
 import { Transaction } from './transaction.entity';
 import { DepositDto } from '../bank_account/dto/deposit.dto';
 import { TransferDto } from '../bank_account/dto/transfer.dto';
@@ -11,7 +12,6 @@ import { WithdrawDto } from '../bank_account/dto/withdraw.dto';
 import { Util } from 'src/helpers/util.helper';
 import { BankAccountRepository } from '../bank_account/bank_account.repository';
 import { SummaryTransaction, SummaryTransactionDocument } from 'src/summary_transaction/schema/summary_transaction.entity';
-import { BankAccountType } from 'src/enums/account.type.enum';
 
 @Injectable()
 export class TransactionService {
@@ -35,12 +35,23 @@ export class TransactionService {
 
     this.bankAccountRepository.update({id: depositDto.bank_account_id}, {balance});
 
-    new this.model({
-      accountNumber: bankAccount.account_number, 
-      type: TransactionType.DEPOSIT, 
-      date: new Date(), 
-      amount: depositDto.amount
-    }).save();
+    const currentDate = moment().format('YYYY-MM-DD');
+
+    const summaryTransaction = await this.model.findOne({
+      date: currentDate,
+      type: TransactionType.DEPOSIT
+    }).exec();
+
+    if (summaryTransaction) {
+      await this.model.findByIdAndUpdate(summaryTransaction.id, {amount: summaryTransaction.amount + depositDto.amount}, {new: true});
+    } else {
+      new this.model({
+        accountNumber: bankAccount.account_number, 
+        type: TransactionType.DEPOSIT, 
+        date: currentDate, 
+        amount: depositDto.amount
+      }).save();
+    }
 
     return transaction;
   }
@@ -64,13 +75,24 @@ export class TransactionService {
     const targetBalance: number = Util.getInstance().updateBalanceAfterReceiveTransfer(targetBankAccount.balance, transferAmount);
     this.bankAccountRepository.update({id: transferDto.reference_account_id}, {balance: targetBalance});
 
-    new this.model({
-      accountNumber: sourceBankAccount.account_number,
-      referenceAccountNumber: targetBankAccount.account_number,
-      type: TransactionType.TRANSFER, 
-      date: new Date(), 
-      amount: transferDto.amount
-    }).save();
+    const currentDate = moment().format('YYYY-MM-DD');
+
+    const summaryTransaction = await this.model.findOne({
+      date: currentDate,
+      type: TransactionType.TRANSFER
+    }).exec();
+    
+    if (summaryTransaction) {
+      await this.model.findByIdAndUpdate(summaryTransaction.id, {amount: summaryTransaction.amount + transferDto.amount}, {new: true});
+    } else {
+      new this.model({
+        accountNumber: sourceBankAccount.account_number,
+        referenceAccountNumber: targetBankAccount.account_number,
+        type: TransactionType.TRANSFER, 
+        date: currentDate,
+        amount: transferDto.amount
+      }).save();
+    }
     
     return transaction;
   }
@@ -88,12 +110,23 @@ export class TransactionService {
 
     this.bankAccountRepository.update({id: withdrawDto.bank_account_id}, {balance});
 
-    new this.model({
-      accountNumber: bankAccount.account_number,
-      type: TransactionType.WITHDRAW, 
-      date: new Date(), 
-      amount: withdrawDto.amount
-    }).save();
+    const currentDate = moment().format('YYYY-MM-DD');
+
+    const summaryTransaction = await this.model.findOne({
+      date: currentDate,
+      type: TransactionType.WITHDRAW
+    }).exec();
+
+    if (summaryTransaction) {
+      await this.model.findByIdAndUpdate(summaryTransaction.id, {amount: summaryTransaction.amount + withdrawDto.amount}, {new: true});
+    } else {
+      new this.model({
+        accountNumber: bankAccount.account_number,
+        type: TransactionType.WITHDRAW, 
+        date: currentDate, 
+        amount: withdrawDto.amount
+      }).save();
+    }
     
     return withdraw;
   }
