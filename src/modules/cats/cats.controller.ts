@@ -27,7 +27,9 @@ export const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);
 @Controller('cats')
 @ApiTags('cats')
 export class CatsController {
-  constructor(private readonly catService: CatsService) {}
+  constructor(
+    private readonly catService: CatsService
+  ) {}
 
   @Get()
   @ApiResponse({
