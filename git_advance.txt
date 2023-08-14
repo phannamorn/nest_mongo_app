@@ -1,0 +1,5 @@
+git diff HEAD~1 HEAD
+git stash
+git stash list
+git staff apply <stash_entry_name>
+git stash pop <stash_entry_name>
