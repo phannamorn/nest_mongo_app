@@ -1,5 +1,7 @@
+git rebase
 git diff HEAD~1 HEAD
-git stash
+git stash [-m]
 git stash list
+git stash clear
 git staff apply <stash_entry_name>
 git stash pop <stash_entry_name>
