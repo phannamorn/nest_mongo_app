@@ -43,7 +43,7 @@ Priority
     b. Google
 
 10. Non-Relational Database
-    a. MongoDB
+    a. MongoDB(https://doug-martin.github.io/nestjs-query/docs/persistence/mongoose/relations/)
     b. CouchDB
     c. Neo4j
     d. Cassandra

@@ -23,3 +23,9 @@ export class Cat {
 }
 
 export const CatSchema = SchemaFactory.createForClass(Cat);
+
+CatSchema.virtual('owner', {
+    ref: 'Owner',
+    localField: '_id',
+    foreignField: 'owner',
+});

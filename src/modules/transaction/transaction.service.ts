@@ -11,7 +11,7 @@ import { TransactionType } from 'src/enums/transaction.type.enum';
 import { WithdrawDto } from '../bank_account/dto/withdraw.dto';
 import { Util } from 'src/helpers/util.helper';
 import { BankAccountRepository } from '../bank_account/bank_account.repository';
-import { SummaryTransaction, SummaryTransactionDocument } from 'src/summary_transaction/schema/summary_transaction.entity';
+import { SummaryTransaction, SummaryTransactionDocument } from 'src/summary_transaction/schema/summary_transaction.schema';
 
 @Injectable()
 export class TransactionService {

@@ -7,7 +7,7 @@ import { TransactionController } from './transaction.controller';
 import { BankAccount } from '../bank_account/entities/bank_account.entity';
 import { BankAccountRepository } from '../bank_account/bank_account.repository';
 import { Session } from '../auth/session.entity';
-import { SummaryTransaction, SummaryTransactionSchema } from 'src/summary_transaction/schema/summary_transaction.entity';
+import { SummaryTransaction, SummaryTransactionSchema } from 'src/summary_transaction/schema/summary_transaction.schema';
 
 @Module({
   imports: [

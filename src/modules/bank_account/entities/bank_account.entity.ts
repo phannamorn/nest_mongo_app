@@ -21,10 +21,10 @@ export class BankAccount {
   account_type: BankAccountType;
 
   @Column()
-  min_transfer: number;
+  minTransfer: number;
 
   @Column()
-  max_transfer: number;
+  maxTransfer: number;
 
   @Column()
   status: BankAccountStatus;

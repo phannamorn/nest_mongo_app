@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import * as moment from 'moment';
 import { CreateSummaryTransactionDto } from './dto/create-summary_transaction.dto';
 import { UpdateSummaryTransactionDto } from './dto/update-summary_transaction.dto';
-import { SummaryTransaction, SummaryTransactionDocument } from './schema/summary_transaction.entity';
+import { SummaryTransaction, SummaryTransactionDocument } from './schema/summary_transaction.schema';
 
 @Injectable()
 export class SummaryTransactionService {
@@ -13,7 +13,7 @@ export class SummaryTransactionService {
   create(createSummaryTransactionDto: CreateSummaryTransactionDto) {
     return new this.model({
       ...createSummaryTransactionDto,
-      date: moment().format('DD/MM/YYYY'),
+      date: moment().format('DD/MM/YYYY')
     }).save();
   }
 

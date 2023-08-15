@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 import { TransactionType } from 'src/enums/transaction.type.enum';
-import { BankAccount } from 'src/modules/bank_account/schemas/bank_account.schema';
 
 export type SummaryTransactionDocument = HydratedDocument<SummaryTransaction>;
 
@@ -21,9 +20,12 @@ export class SummaryTransaction {
 
     @Prop()
     amount: number;
-
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: BankAccount.name })
-    bankAccount: BankAccount;
 }
 
 export const SummaryTransactionSchema = SchemaFactory.createForClass(SummaryTransaction);
+
+SummaryTransactionSchema.virtual('bankAccount', {
+    ref: 'BankAccount',
+    localField: '_id',
+    foreignField: 'bankAccount',
+});
