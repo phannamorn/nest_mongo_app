@@ -1,16 +1,20 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Transform } from 'class-transformer';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { BankAccountType } from 'src/enums/account.type.enum';
 import { BankAccountStatus } from 'src/enums/bank_account_status.enum';
 import { TransactionType } from 'src/enums/transaction.type.enum';
+import { Transaction } from 'src/modules/transaction/transaction.schema';
 
-export type BankAccountDocument = HydratedDocument<BankAccount>;
+export type BankAccountDocument = BankAccount & Document;
 
 @Schema({timestamps: true})
 export class BankAccount {
     @Transform(({ value }) => value.toString())
     _id: string;
+
+    @Prop([{ type: mongoose.Types.ObjectId, ref: Transaction.name }])
+    transactions: [Transaction];
 
     @Prop()
     accountNumber: string;

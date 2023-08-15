@@ -25,8 +25,10 @@ export class TransactionService {
     const transaction = await new this.transactionModel({
       ...depositDto,
       date: new Date(),
-      type: TransactionType.DEPOSIT
+      type: TransactionType.DEPOSIT,
     }).save();
+
+    await this.transactionModel.findByIdAndUpdate(transaction.id, {$addToSet: {bankAccount: depositDto.bankAccountId}}, {new: true});
 
     const balance = Util.getInstance().updateBalanceAfterDeposit(bankAccount.balance || 0, depositDto.amount);
 
@@ -129,12 +131,10 @@ export class TransactionService {
   }
 
   findAll() {
-    return this.transactionModel.find();
+    return this.transactionModel.find().populate('bankAccount');
   }
 
-  async findOne(id: string) {
-    const transaction = await this.transactionModel.findById(id);
-    const bankAccount = await transaction.populate('bankAccount');
-    return { transaction, bankAccount };
+  findOne(id: string) {
+    return this.transactionModel.findById(id).populate('bankAccount');
   }
 }

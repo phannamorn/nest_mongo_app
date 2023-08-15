@@ -20,7 +20,7 @@ export class BankAccountService {
   }
 
   async findOne(id: string): Promise<BankAccount> {
-    return this.model.findById(id);
+    return await this.model.findById(id).populate('transactions');
   }
 
   update(id: string, updateBankAccountDto: UpdateBankAccountDto) {

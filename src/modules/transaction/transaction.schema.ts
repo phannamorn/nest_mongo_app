@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Transform, Type } from 'class-transformer';
-import { HydratedDocument } from 'mongoose';
+import { Transform } from 'class-transformer';
+import mongoose, { Document } from 'mongoose';
 import { TransactionType } from 'src/enums/transaction.type.enum';
-import { BankAccount, BankAccountSchema } from '../bank_account/schemas/bank_account.schema';
+import { BankAccount } from '../bank_account/schemas/bank_account.schema';
 
-export type TransactionDocument = HydratedDocument<Transaction>;
+export type TransactionDocument = Transaction & Document;
 
 @Schema()
 export class Transaction {
@@ -17,8 +17,7 @@ export class Transaction {
     @Prop()
     referenceAccountId: string;
 
-    @Prop({ type: BankAccountSchema })
-    @Type(() => BankAccount)
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'BankAccount' })
     bankAccount: BankAccount;
 
     @Prop()
