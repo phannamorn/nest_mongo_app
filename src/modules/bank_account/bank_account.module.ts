@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { BankAccountService } from './bank_account.service';
 import { BankAccountController } from './bank_account.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { BankAccount } from './entities/bank_account.entity';
+import { BankAccount, BankAccountSchema } from './schemas/bank_account.schema';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([BankAccount])],
+  imports: [MongooseModule.forFeature([{name: BankAccount.name, schema: BankAccountSchema}])],
   controllers: [BankAccountController],
   providers: [BankAccountService],
 })

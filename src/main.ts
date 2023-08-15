@@ -17,8 +17,8 @@ async function bootstrap() {
     .addTag('summary-transaction')
     .addTag('owners')
     .addTag('customers')
-    .addTag('bank_accounts')
-    .addTag('transactions')
+    .addTag('Bank Accounts')
+    .addTag('Transaction')
     .addTag('reports')
     .build();
 

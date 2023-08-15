@@ -16,7 +16,7 @@ import { WithdrawDto } from '../bank_account/dto/withdraw.dto';
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('transactions')
-@ApiTags('transactions')
+@ApiTags('Transaction')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
@@ -42,6 +42,6 @@ export class TransactionController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.transactionService.findOne(+id);
+    return this.transactionService.findOne(id);
   }
 }

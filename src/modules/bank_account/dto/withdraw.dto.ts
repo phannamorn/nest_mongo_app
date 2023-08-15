@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class WithdrawDto {
   @ApiProperty()
-  bank_account_id: number;
+  bankAccountId: string;
 
   @ApiProperty()
   amount: number;

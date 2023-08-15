@@ -52,22 +52,10 @@ export class CustomersController {
   findAll() {
     return this.customersService.findAll();
   }
-
-  @Get('/top-transactions')
-  getTopTransactions(@Query('limit') limit: number) {
-    const option: FilterOptions = { limit };
-    return this.customersService.getTopCustomersWithMostTransactions(option);
-  }
-
-  @Get('/highest-credit')
-  getHighestCreditScore(@Query('limit') limit: number) {
-    const option: FilterOptions = { limit };
-    return this.customersService.getHighestCreditScore(option);
-  }
   
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.customersService.findOne(+id);
+    return this.customersService.findOne(id);
   }
 
   @Put(':id')
@@ -75,11 +63,11 @@ export class CustomersController {
     @Param('id') id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
   ) {
-    return this.customersService.update(+id, updateCustomerDto);
+    return this.customersService.update(id, updateCustomerDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.customersService.remove(+id);
+    return this.customersService.remove(id);
   }
 }

@@ -3,14 +3,23 @@ import { BankAccountType } from 'src/enums/account.type.enum';
 
 export class CreateBankAccountDto {
   @ApiProperty()
-  account_number: string;
+  accountNumber: string;
 
   @ApiProperty()
-  customer_id: number;
+  customerId: string;
+
+  @ApiProperty()
+  balance: number;
+
+  @ApiProperty()
+  minTransfer: number;
+
+  @ApiProperty()
+  maxTransfer: number;
 
   @ApiProperty({
     enum: BankAccountType,
     example: [BankAccountType.CHECKING, BankAccountType.CREDIT, BankAccountType.PAYROLL, BankAccountType.SAVING]
   })
-  account_type: BankAccountType;
+  accountType: BankAccountType;
 }

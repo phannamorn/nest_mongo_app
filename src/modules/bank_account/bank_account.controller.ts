@@ -13,7 +13,7 @@ import { CreateBankAccountDto } from './dto/create-bank_account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank_account.dto';
 
 @Controller('bank_accounts')
-@ApiTags('bank_accounts')
+@ApiTags('Bank Accounts')
 export class BankAccountController {
   constructor(private readonly bankAccountService: BankAccountService) {}
 
@@ -28,7 +28,7 @@ export class BankAccountController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: string) {
     return this.bankAccountService.findOne(id);
   }
 
@@ -37,11 +37,11 @@ export class BankAccountController {
     @Param('id') id: string,
     @Body() updateBankAccountDto: UpdateBankAccountDto,
   ) {
-    return this.bankAccountService.update(+id, updateBankAccountDto);
+    return this.bankAccountService.update(id, updateBankAccountDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.bankAccountService.remove(+id);
+    return this.bankAccountService.remove(id);
   }
 }

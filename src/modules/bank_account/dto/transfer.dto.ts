@@ -2,10 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class TransferDto {
   @ApiProperty()
-  bank_account_id: number;
+  bankAccountId: string;
 
   @ApiProperty()
-  reference_account_id: number;
+  referenceAccountId: string;
 
   @ApiProperty()
   amount: number;
