@@ -1,7 +1,9 @@
 import {
   Controller,
+  Get,
   Post,
   Body,
+  Query,
   Inject,
   UseGuards
 } from '@nestjs/common';
@@ -16,6 +18,8 @@ import {
   TaxRealestatePaymentDto, 
   WaterPaymentDto
 } from './dto/payment.dto';
+import { PaymentParams } from './payment.params';
+import { PaymentFilter } from './payment.filter';
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
@@ -27,27 +31,39 @@ export class PaymentController {
   ) {}
 
   @Post('water-payment')
-  async waterPayment(@Body() waterPaymentDto: WaterPaymentDto): Promise<Transaction> {
-    return await this.paymentService.waterPayment(waterPaymentDto);
+  waterPayment(@Body() waterPaymentDto: WaterPaymentDto): Promise<Transaction> {
+    return this.paymentService.waterPayment(waterPaymentDto);
   }
 
   @Post('electricity-payment')
-  async electricityPayment(@Body() electricityPaymentDto: ElectricityPaymentDto): Promise<Transaction> {
-    return await this.paymentService.electricityPayment(electricityPaymentDto);
+  electricityPayment(@Body() electricityPaymentDto: ElectricityPaymentDto): Promise<Transaction> {
+    return this.paymentService.electricityPayment(electricityPaymentDto);
   }
 
   @Post('phone-card-payment')
-  async phoneCardPayment(@Body() phoneCardPaymentDto: PhoneCardPaymentDto): Promise<Transaction> {
-    return await this.paymentService.phoneCardPayment(phoneCardPaymentDto);
+  phoneCardPayment(@Body() phoneCardPaymentDto: PhoneCardPaymentDto): Promise<Transaction> {
+    return this.paymentService.phoneCardPayment(phoneCardPaymentDto);
   }
 
   @Post('tax-on-realestate-payment')
-  async taxOnRealestatePayment(taxOnRealestatePaymentDto: TaxRealestatePaymentDto): Promise<Transaction> {
-    return await this.paymentService.taxOnRealestatePayment(taxOnRealestatePaymentDto);
+  taxOnRealestatePayment(taxOnRealestatePaymentDto: TaxRealestatePaymentDto): Promise<Transaction> {
+    return this.paymentService.taxOnRealestatePayment(taxOnRealestatePaymentDto);
   }
 
   @Post('tax-on-vehicle-payment')
-  async taxOnVehiclePayment(@Body() taxtOnVehicleDto: TaxOnVehiclePaymentDto): Promise<Transaction> {
-    return await this.paymentService.taxOnVehiclePayment(taxtOnVehicleDto);
+  taxOnVehiclePayment(@Body() taxtOnVehicleDto: TaxOnVehiclePaymentDto): Promise<Transaction> {
+    return this.paymentService.taxOnVehiclePayment(taxtOnVehicleDto);
   }
+
+  @Get()
+  findAll(@Query() params: PaymentParams) {
+    const option: PaymentFilter = {
+      limit: params.limit,
+      offset: params.offset,
+      search: params.search,
+      type: params.type
+    };
+    return this.paymentService.findAll(option);
+  }
+
 }

@@ -11,13 +11,17 @@ import {
   WaterPaymentDto 
 } from './dto/payment.dto';
 import { IPaymentService } from './payment.service.interface';
+import { PaymentFilter } from './payment.filter';
+import { BaseService } from 'src/cores/base.service';
 
 @Injectable()
-export class PaymentService implements IPaymentService {
+export class PaymentService extends BaseService implements IPaymentService {
   constructor(
     @InjectModel(Transaction.name) private readonly transactionModel: Model<TransactionDocument>
-  ) {}
-  
+  ) {
+    super();
+  }
+
   async waterPayment(waterPaymentDto: WaterPaymentDto): Promise<Transaction> {
     return new this.transactionModel({
       bankAccountId: waterPaymentDto.bankAccountId,
@@ -66,5 +70,35 @@ export class PaymentService implements IPaymentService {
       amount: taxOnVehiclePaymentDto.amount * (-1),
       date: new Date()
     }).save();
+  }
+
+  findAll(option: PaymentFilter): Promise<Transaction[]> {
+    let filter: any = {};
+
+    if (option.search) {
+      filter = {
+        $text: {
+          $search: option.search
+        }
+      };
+    }
+
+    if (option.type) {
+      filter.type = option.type;
+    }
+    
+    const query = this.transactionModel.find(filter).sort({firstName: 'asc', lastName: 'asc'});
+
+    if (option.offset) {
+      query.skip(option.offset);
+    }
+
+    if (option.limit) {
+      query.limit(option.limit);
+    } else {
+      query.limit(this.limit);
+    }
+
+    return query;
   }
 }
