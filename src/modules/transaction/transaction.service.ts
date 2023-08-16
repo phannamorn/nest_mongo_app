@@ -171,6 +171,7 @@ export class TransactionService {
             date: {
               $dateToString: { format: "%Y-%m-%d", date: "$date" }
             },
+            type: "$type"
           },
           total: { $sum: "$amount" }
         },
@@ -180,6 +181,7 @@ export class TransactionService {
     const results = await this.transactionModel.aggregate(pipeline).limit(100);
     return results.map(result => ({
       date: result._id.date,
+      type: result._id.type,
       total: result.total
     }));
   }

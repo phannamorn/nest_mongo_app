@@ -13,7 +13,7 @@ import { CreateBankAccountDto } from './dto/create-bank_account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank_account.dto';
 
 @Controller('bank_accounts')
-@ApiTags('Bank Accounts')
+@ApiTags('Bank Account')
 export class BankAccountController {
   constructor(private readonly bankAccountService: BankAccountService) {}
 
