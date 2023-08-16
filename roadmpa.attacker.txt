@@ -1,0 +1,18 @@
+Here is a roadmap to become a hacker:
+
+1. **Learn the basics of computer science.** This includes topics such as data structures, algorithms, operating systems, and networking.
+2. **Learn a programming language.** Python is a good language to start with because it is easy to learn and has a large community of users.
+3. **Practice coding.** The best way to learn how to code is by practicing. There are many online resources available to help you practice coding, such as Codewars and HackerRank.
+4. **Get involved in the hacker community.** There are many online and offline communities where hackers can connect with each other and learn from each other. Attending local meetups and conferences is a great way to meet other hackers and learn about new technologies.
+5. **Contribute to open source projects.** This is a great way to get experience working on real-world projects and to learn from other experienced hackers.
+6. **Hack on your own projects.** The best way to become a hacker is to hack on your own projects. This will give you the opportunity to apply the skills you have learned and to learn new skills.
+7. **Never give up.** Hacking is a challenging but rewarding field. If you are persistent and keep learning, you will eventually achieve your goals.
+
+Here are some additional tips for becoming a hacker:
+
+* **Be curious.** Hackers are always asking questions and trying to learn new things.
+* **Be creative.** Hackers are not afraid to think outside the box and come up with new solutions to problems.
+* **Be persistent.** Hacking can be frustrating at times, but it is important to never give up.
+* **Be humble.** Hackers are always learning and sharing their knowledge with others.
+
+I hope this roadmap helps you on your journey to becoming a hacker!

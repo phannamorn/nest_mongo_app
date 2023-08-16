@@ -10,7 +10,6 @@ import { CustomersModule } from './modules/customers/customers.module';
 import { BankAccountModule } from './modules/bank_account/bank_account.module';
 import { TransactionModule } from './modules/transaction/transaction.module';
 import { Customer } from './modules/customers/entities/customer.entity';
-import { Transaction } from './modules/transaction/transaction.entity';
 import { BankAccount } from './modules/bank_account/entities/bank_account.entity';
 import { RolesModule } from './modules/roles/roles.module';
 import { Session } from './modules/auth/session.entity';
@@ -36,7 +35,6 @@ import { PaymentModule } from './modules/payment/payment.module';
         User,
         Role,
         Customer,
-        Transaction,
         BankAccount,
         Session
       ],
