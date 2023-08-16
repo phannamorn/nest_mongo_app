@@ -1,5 +1,3 @@
-import { Injectable } from '@nestjs/common';
-
 export class BaseService {
-
+    protected limit: number = 15;
 }

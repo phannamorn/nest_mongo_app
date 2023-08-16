@@ -11,14 +11,17 @@ import { SummaryTransaction, SummaryTransactionDocument } from 'src/summary_tran
 import { Transaction, TransactionDocument } from './transaction.schema';
 import { BankAccount, BankAccountDocument } from '../bank_account/schemas/bank_account.schema';
 import { TransactionFilter } from './transaction.filter';
+import { BaseService } from 'src/cores/base.service';
 
 @Injectable()
-export class TransactionService {
+export class TransactionService extends BaseService {
   constructor(
     @InjectModel(Transaction.name) private readonly transactionModel: Model<TransactionDocument>,
     @InjectModel(SummaryTransaction.name) private readonly model: Model<SummaryTransactionDocument>,
     @InjectModel(BankAccount.name) private readonly bankAccountModel: Model<BankAccountDocument>
-  ) {}
+  ) {
+    super();
+  }
   
   async deposit(depositDto: DepositDto) {
     const bankAccount = await this.bankAccountModel.findById(depositDto.bankAccountId);
@@ -140,8 +143,8 @@ export class TransactionService {
 
     if (option.startDate && option.endDate) {
       filter.date = {
-        $gte: option.startDate,
-        $lte: option.endDate
+        $gte: `${option.startDate} 00:00:00`,
+        $lte: `${option.endDate} 23:59:59`
       }
     }
 
@@ -149,6 +152,8 @@ export class TransactionService {
     
     if (option.limit) {
       query.limit(option.limit);
+    } else {
+      query.limit(this.limit);
     }
 
     if (option.offset) {
@@ -184,6 +189,28 @@ export class TransactionService {
       type: result._id.type,
       total: result.total
     }));
+  }
+
+  async getTopBankAccountWithMostTransactions() {
+    const pipeline = [
+      {
+        $group: {
+          _id: {
+            bankAccountId: "$bankAccountId",
+          },
+          total: { $sum: "$amount" },
+        },
+      }
+    ];
+
+    const results = await this.transactionModel.aggregate(pipeline);
+
+    return results.map((result) => {
+      return {
+        bankAccountId: result._id.bankAccountId,
+        total: result.total,
+      };
+    });
   }
 
   findOne(id: string) {

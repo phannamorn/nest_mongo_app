@@ -62,6 +62,11 @@ export class TransactionController {
     return this.transactionService.findSummary(option);
   }
 
+  @Get('top-bank-account')
+  async getTopBankAccountWithMostTransactions() {
+    return this.transactionService.getTopBankAccountWithMostTransactions();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.transactionService.findOne(id);
