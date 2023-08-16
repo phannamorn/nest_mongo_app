@@ -4,8 +4,7 @@ import {
   Post,
   Body,
   Param,
-  UseGuards,
-  Put,
+  UseGuards
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { TransactionService } from './transaction.service';

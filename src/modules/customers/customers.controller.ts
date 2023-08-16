@@ -49,8 +49,13 @@ export class CustomersController {
   }
 
   @Get()
-  findAll() {
-    return this.customersService.findAll();
+  findAll(
+    @Query('limit') limit: number,
+    @Query('offset') offset: number,
+    @Query('search') search?: string,
+  ) {
+    const option: FilterOptions = { offset, limit, search };
+    return this.customersService.findAll(option);
   }
   
   @Get(':id')

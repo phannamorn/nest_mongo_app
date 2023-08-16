@@ -3,3 +3,9 @@ export interface FilterOptions {
   offset?: number;
   search?: string;
 }
+
+export type QueryOption = {
+  $text: {
+    $search: string
+  }
+};
