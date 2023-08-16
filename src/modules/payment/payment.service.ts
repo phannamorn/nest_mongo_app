@@ -98,10 +98,6 @@ export class PaymentService extends BaseService implements IPaymentService {
     } else {
       query.limit(this.limit);
     }
-    
-    /**
-     * This code test for pull request or merge request only
-     */
 
     return query;
   }
