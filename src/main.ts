@@ -17,6 +17,7 @@ async function bootstrap() {
     .addTag('Customer')
     .addTag('Bank Account')
     .addTag('Transaction')
+    .addTag('Payment')
     .addTag('Report')
     .build();
 

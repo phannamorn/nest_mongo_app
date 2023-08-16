@@ -7,6 +7,8 @@ import { Session } from '../auth/session.entity';
 import { SummaryTransaction, SummaryTransactionSchema } from 'src/summary_transaction/schema/summary_transaction.schema';
 import { Transaction, TransactionSchema } from './transaction.schema';
 import { BankAccount, BankAccountSchema } from '../bank_account/schemas/bank_account.schema';
+import { PaymentService } from '../payment/payment.service';
+import { PAYMENT_SERVICE } from '../payment/payment.service.interface';
 
 @Module({
   imports: [
@@ -19,7 +21,11 @@ import { BankAccount, BankAccountSchema } from '../bank_account/schemas/bank_acc
   ],
   controllers: [TransactionController],
   providers: [
-    TransactionService
+    TransactionService,
+    {
+      useClass: PaymentService,
+      provide: PAYMENT_SERVICE
+    }
   ],
 })
 export class TransactionModule {}

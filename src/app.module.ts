@@ -18,6 +18,7 @@ import { User } from './modules/users/entities/user.entity';
 import { Role } from './modules/roles/entities/role.entity';
 import { SummaryTransactionModule } from './summary_transaction/summary_transaction.module';
 import { ReportsModule } from './modules/reports/reports.module';
+import { PaymentModule } from './modules/payment/payment.module';
 
 @Module({
   controllers: [AppController],
@@ -46,6 +47,7 @@ import { ReportsModule } from './modules/reports/reports.module';
     UsersModule,
     CustomersModule,
     TransactionModule,
+    PaymentModule,
     BankAccountModule,
     RolesModule,
     SummaryTransactionModule,

@@ -163,6 +163,10 @@ export class TransactionService extends BaseService {
     return query;
   }
 
+  findOne(id: string) {
+    return this.transactionModel.findById(id).populate('bankAccount');
+  }
+
   async findSummary(option: TransactionFilter) {
     const pipeline = [
       {
@@ -205,15 +209,9 @@ export class TransactionService extends BaseService {
 
     const results = await this.transactionModel.aggregate(pipeline);
 
-    return results.map((result) => {
-      return {
-        bankAccountId: result._id.bankAccountId,
-        total: result.total,
-      };
-    });
-  }
-
-  findOne(id: string) {
-    return this.transactionModel.findById(id).populate('bankAccount');
+    return results.map((result) => ({
+      bankAccountId: result._id.bankAccountId,
+      total: result.total,
+    }));
   }
 }
