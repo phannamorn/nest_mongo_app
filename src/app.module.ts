@@ -3,12 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
-import { CatsModule } from './modules/cats/cats.module';
-import { OwnersModule } from './modules/owners/owners.module';
-import { Cat } from './modules/cats/cat.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
-import { Owner } from './modules/owners/owner.entity';
 import { AppController } from './app.controller';
 import { CustomersModule } from './modules/customers/customers.module';
 import { BankAccountModule } from './modules/bank_account/bank_account.module';
@@ -38,8 +34,6 @@ import { ReportsModule } from './modules/reports/reports.module';
       entities: [
         User,
         Role,
-        Cat,
-        Owner,
         Customer,
         Transaction,
         BankAccount,
@@ -48,8 +42,6 @@ import { ReportsModule } from './modules/reports/reports.module';
       logging: true,
     }),
     MongooseModule.forRoot('mongodb://127.0.0.1:27017/first_app'),
-    CatsModule,
-    OwnersModule,
     AuthModule,
     UsersModule,
     CustomersModule,

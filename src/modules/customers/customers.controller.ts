@@ -24,7 +24,7 @@ import { QueryParams } from 'src/types/quer.params';
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('customers')
-@ApiTags('customers')
+@ApiTags('Customer')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 

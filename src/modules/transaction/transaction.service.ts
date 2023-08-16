@@ -47,7 +47,7 @@ export class TransactionService {
     } else {
       new this.model({
         accountNumber: bankAccount.accountNumber, 
-        type: TransactionType.DEPOSIT, 
+        type: TransactionType.DEPOSIT,
         date: currentDate, 
         amount: depositDto.amount
       }).save();

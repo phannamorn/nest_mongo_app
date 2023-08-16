@@ -12,14 +12,13 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('auth')
     .addTag('users')
-    .addTag('roles')
-    .addTag('cats')
-    .addTag('summary-transaction')
+    .addTag('Role')
+    .addTag('Summary Transaction')
     .addTag('owners')
-    .addTag('customers')
+    .addTag('Customer')
     .addTag('Bank Accounts')
     .addTag('Transaction')
-    .addTag('reports')
+    .addTag('Report')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

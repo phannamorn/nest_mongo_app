@@ -5,7 +5,7 @@ import { CreateSummaryTransactionDto } from './dto/create-summary_transaction.dt
 import { UpdateSummaryTransactionDto } from './dto/update-summary_transaction.dto';
 
 @Controller('summary-transaction')
-@ApiTags('summary-transaction')
+@ApiTags('Summary Transaction')
 export class SummaryTransactionController {
   constructor(private readonly summaryTransactionService: SummaryTransactionService) {}
 
