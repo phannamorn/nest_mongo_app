@@ -158,21 +158,28 @@ export class TransactionService {
     return query;
   }
 
-  async findSummary() {
+  async findSummary(option: TransactionFilter) {
     const pipeline = [
+      {
+        $match: {
+          bankAccountId: option.bankAccountId
+        }
+      },
       {
         $group: {
           _id: {
-            bankAccountId: "$bankAccountId",
+            date: {
+              $dateToString: { format: "%Y-%m-%d", date: "$date" }
+            },
           },
-          total: { $sum: "$amount" },
+          total: { $sum: "$amount" }
         },
       },
     ];
 
     const results = await this.transactionModel.aggregate(pipeline).limit(100);
     return results.map(result => ({
-      bankAccountId: result._id.bankAccountId,
+      date: result._id.date,
       total: result.total
     }));
   }

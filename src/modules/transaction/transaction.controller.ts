@@ -53,8 +53,13 @@ export class TransactionController {
   }
 
   @Get('summary')
-  getSummary() {
-    return this.transactionService.findSummary();
+  getSummary(
+    @Query() params: TransactionParams
+  ) {
+    const option: TransactionFilter = {
+      bankAccountId: params.bankAccountId
+    };
+    return this.transactionService.findSummary(option);
   }
 
   @Get(':id')
