@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -55,8 +55,13 @@ export class CustomersService {
     return query;
   }
 
-  findOne(id: string) {
-    return this.model.findById(id);
+  async findOne(id: string) {
+    const result = await this.model.findById(id);
+    if (result == null) {
+      throw new NotFoundException();
+    }
+
+    return result;
   }
 
   update(id: string, updateCustomerDto: UpdateCustomerDto) {

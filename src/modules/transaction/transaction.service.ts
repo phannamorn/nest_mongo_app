@@ -10,6 +10,7 @@ import { Util } from 'src/helpers/util.helper';
 import { SummaryTransaction, SummaryTransactionDocument } from 'src/summary_transaction/schema/summary_transaction.schema';
 import { Transaction, TransactionDocument } from './transaction.schema';
 import { BankAccount, BankAccountDocument } from '../bank_account/schemas/bank_account.schema';
+import { TransactionFilter } from './transaction.filter';
 
 @Injectable()
 export class TransactionService {
@@ -130,8 +131,50 @@ export class TransactionService {
     return withdraw;
   }
 
-  findAll() {
-    return this.transactionModel.find().populate('bankAccount');
+  findAll(option: TransactionFilter) {
+    let filter: any = {};
+
+    if (option.bankAccountId) {
+      filter.bankAccountId = option.bankAccountId;
+    }
+
+    if (option.startDate && option.endDate) {
+      filter.date = {
+        $gte: option.startDate,
+        $lte: option.endDate
+      }
+    }
+
+    const query = this.transactionModel.find(filter).sort({date: 'desc'}).populate('bankAccount');
+    
+    if (option.limit) {
+      query.limit(option.limit);
+    }
+
+    if (option.offset) {
+      query.skip(option.offset);
+    }
+
+    return query;
+  }
+
+  async findSummary() {
+    const pipeline = [
+      {
+        $group: {
+          _id: {
+            bankAccountId: "$bankAccountId",
+          },
+          total: { $sum: "$amount" },
+        },
+      },
+    ];
+
+    const results = await this.transactionModel.aggregate(pipeline).limit(100);
+    return results.map(result => ({
+      bankAccountId: result._id.bankAccountId,
+      total: result.total
+    }));
   }
 
   findOne(id: string) {

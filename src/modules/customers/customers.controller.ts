@@ -19,6 +19,7 @@ import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './update-customer.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { FilterOptions } from 'src/types/filter.option';
+import { QueryParams } from 'src/types/quer.params';
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard)
@@ -50,11 +51,9 @@ export class CustomersController {
 
   @Get()
   findAll(
-    @Query('limit') limit: number,
-    @Query('offset') offset: number,
-    @Query('search') search?: string,
+    @Query() params: QueryParams
   ) {
-    const option: FilterOptions = { offset, limit, search };
+    const option: FilterOptions = { limit: params.limit, offset: params.offset, search: params.search };
     return this.customersService.findAll(option);
   }
   

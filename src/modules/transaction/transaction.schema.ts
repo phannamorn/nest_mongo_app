@@ -6,7 +6,7 @@ import { BankAccount } from '../bank_account/schemas/bank_account.schema';
 
 export type TransactionDocument = Transaction & Document;
 
-@Schema()
+@Schema({versionKey: false})
 export class Transaction {
     @Transform(({ value }) => value.toString())
     _id: string;
