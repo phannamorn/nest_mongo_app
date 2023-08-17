@@ -7,7 +7,7 @@ import {
   ElectricityPaymentDto, 
   PhoneCardPaymentDto, 
   TaxOnVehiclePaymentDto, 
-  TaxRealestatePaymentDto, 
+  TaxRealestatePaymentDto,
   WaterPaymentDto 
 } from './dto/payment.dto';
 import { IPaymentService } from './payment.service.interface';
@@ -22,7 +22,7 @@ export class PaymentService extends BaseService implements IPaymentService {
     super();
   }
 
-  async waterPayment(waterPaymentDto: WaterPaymentDto): Promise<Transaction> {
+  waterPayment(waterPaymentDto: WaterPaymentDto): Promise<Transaction> {
     return new this.transactionModel({
       bankAccountId: waterPaymentDto.bankAccountId,
       referenceAccountId: waterPaymentDto.waterBillId,
@@ -32,7 +32,7 @@ export class PaymentService extends BaseService implements IPaymentService {
     }).save();
   }
 
-  async electricityPayment(electricityPaymentDto: ElectricityPaymentDto): Promise<Transaction> {
+  electricityPayment(electricityPaymentDto: ElectricityPaymentDto): Promise<Transaction> {
     return new this.transactionModel({
       bankAccountId: electricityPaymentDto.bankAccountId,
       referenceAccountId: electricityPaymentDto.electricityBillId,
@@ -42,7 +42,7 @@ export class PaymentService extends BaseService implements IPaymentService {
     }).save();
   }
 
-  async phoneCardPayment(phoneCardPaymentDto: PhoneCardPaymentDto): Promise<Transaction> {
+  phoneCardPayment(phoneCardPaymentDto: PhoneCardPaymentDto): Promise<Transaction> {
     return new this.transactionModel({
       bankAccountId: phoneCardPaymentDto.bankAccountId,
       referenceAccountId: phoneCardPaymentDto.phoneCardId,
@@ -52,7 +52,7 @@ export class PaymentService extends BaseService implements IPaymentService {
     }).save();
   }
 
-  async taxOnRealestatePayment(taxRealestatePaymentDto: TaxRealestatePaymentDto): Promise<Transaction> {
+  taxOnRealestatePayment(taxRealestatePaymentDto: TaxRealestatePaymentDto): Promise<Transaction> {
     return new this.transactionModel({
       bankAccountId: taxRealestatePaymentDto.bankAccountId,
       referenceAccountId: taxRealestatePaymentDto.realestateId,
@@ -62,7 +62,7 @@ export class PaymentService extends BaseService implements IPaymentService {
     }).save();
   }
   
-  async taxOnVehiclePayment(taxOnVehiclePaymentDto: TaxOnVehiclePaymentDto): Promise<Transaction> {
+  taxOnVehiclePayment(taxOnVehiclePaymentDto: TaxOnVehiclePaymentDto): Promise<Transaction> {
     return new this.transactionModel({
       bankAccountId: taxOnVehiclePaymentDto.bankAccountId,
       referenceAccountId: taxOnVehiclePaymentDto.vehicleId,

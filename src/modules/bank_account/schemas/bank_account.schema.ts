@@ -13,7 +13,7 @@ export class BankAccount {
     @Transform(({ value }) => value.toString())
     _id: string;
 
-    @Prop([{ type: mongoose.Types.ObjectId, ref: Transaction.name }])
+    @Prop([{ type: mongoose.Types.ObjectId, ref: 'Transaction' }])
     transactions: [Transaction];
 
     @Prop()

@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Transform } from 'class-transformer';
 import mongoose, { Document } from 'mongoose';
 import { TransactionType } from 'src/enums/transaction.type.enum';
 import { BankAccount } from '../bank_account/schemas/bank_account.schema';
@@ -8,9 +7,7 @@ export type TransactionDocument = Transaction & Document;
 
 @Schema({versionKey: false})
 export class Transaction {
-    @Transform(({ value }) => value.toString())
-    _id: string;
-    
+   
     @Prop()
     bankAccountId: string;
 
