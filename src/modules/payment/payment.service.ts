@@ -13,6 +13,7 @@ import {
 import { IPaymentService } from './payment.service.interface';
 import { PaymentFilter } from './payment.filter';
 import { BaseService } from 'src/cores/base.service';
+import { PhoneCard } from './phonecard.interface';
 
 @Injectable()
 export class PaymentService extends BaseService implements IPaymentService {
@@ -20,6 +21,10 @@ export class PaymentService extends BaseService implements IPaymentService {
     @InjectModel(Transaction.name) private readonly transactionModel: Model<TransactionDocument>
   ) {
     super();
+  }
+
+  private topupPhoneCard(phoneCard: PhoneCard) {
+    console.log(`You're currently topup phone card:`, phoneCard);
   }
 
   waterPayment(waterPaymentDto: WaterPaymentDto): Promise<Transaction> {
