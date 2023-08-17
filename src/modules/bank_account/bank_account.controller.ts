@@ -6,11 +6,15 @@ import {
   Param,
   Delete,
   Put,
+  Query,
+  HttpCode,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { BankAccountService } from './bank_account.service';
 import { CreateBankAccountDto } from './dto/create-bank_account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank_account.dto';
+import { BankAccountParams } from './bank_account.params';
+import { BankAccountFilter } from './bank_account.filter';
 
 @Controller('bank_accounts')
 @ApiTags('Bank Account')
@@ -23,8 +27,14 @@ export class BankAccountController {
   }
 
   @Get()
-  findAll() {
-    return this.bankAccountService.findAll();
+  findAll(@Query() params: BankAccountParams) {
+    const option: BankAccountFilter = {
+      limit: params.limit,
+      offset: params.offset,
+      search: params.search,
+      status: params.status
+    };
+    return this.bankAccountService.findAll(option);
   }
 
   @Get(':id')
@@ -38,6 +48,18 @@ export class BankAccountController {
     @Body() updateBankAccountDto: UpdateBankAccountDto,
   ) {
     return this.bankAccountService.update(id, updateBankAccountDto);
+  }
+
+  @HttpCode(201)
+  @Put('block-account/:id')
+  blockAccount(@Param('id') id: string) {
+    return this.bankAccountService.blockAccount(id);
+  }
+
+  @HttpCode(201)
+  @Put('unblock-account/:id')
+  unBlockAccount(@Param('id') id: string) {
+    return this.bankAccountService.unBlockAccount(id);
   }
 
   @Delete(':id')

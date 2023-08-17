@@ -17,6 +17,9 @@ export class CreateBankAccountDto {
   @ApiProperty()
   maxTransfer: number;
 
+  @ApiProperty()
+  status: string;
+
   @ApiProperty({
     enum: BankAccountType,
     example: [BankAccountType.CHECKING, BankAccountType.CREDIT, BankAccountType.PAYROLL, BankAccountType.SAVING]

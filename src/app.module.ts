@@ -18,6 +18,7 @@ import { Role } from './modules/roles/entities/role.entity';
 import { SummaryTransactionModule } from './summary_transaction/summary_transaction.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { PaymentModule } from './modules/payment/payment.module';
+import { TransfersModule } from './modules/transfers/transfers.module';
 
 @Module({
   controllers: [AppController],
@@ -49,7 +50,8 @@ import { PaymentModule } from './modules/payment/payment.module';
     BankAccountModule,
     RolesModule,
     SummaryTransactionModule,
-    ReportsModule
+    ReportsModule,
+    TransfersModule
   ],
 })
 export class AppModule {}
