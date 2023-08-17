@@ -20,11 +20,10 @@ describe('RolesController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RolesController],
       providers: [
-        RolesService,
         {
           provide: RolesService,
           useValue: mockRolesService,
-        },
+        }
       ],
     }).compile();
 
