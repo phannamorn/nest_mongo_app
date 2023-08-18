@@ -40,7 +40,8 @@ Priority
 
 9. Cloud Hosting
     a. AWS
-    b. Google
+    b. Google Cloud
+    c. Digital Ocean
 
 10. Non-Relational Database
     a. MongoDB(https://doug-martin.github.io/nestjs-query/docs/persistence/mongoose/relations/)
